@@ -19,7 +19,7 @@ def get_jugendherbergen():
   conn = sqlite3.connect(data_files['jugendherberge.db'])
   cursor = conn.cursor()
   
-  results = list(cursor.execute('SELECT * FROM Jugendherberge'))
+  results = list(cursor.execute('SELECT Name, ID FROM Jugendherberge'))
   
   print("Server", results)
   
