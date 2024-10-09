@@ -5,6 +5,7 @@ package_name: Jugendherberge_Verwaltung
 renamed: true
 runtime_options:
   client_version: '3'
+  server_persist: true
   server_spec: {base: python310-minimal}
   server_version: python3-sandbox
   version: 2
