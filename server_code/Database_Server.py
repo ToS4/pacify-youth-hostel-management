@@ -4,6 +4,7 @@ from anvil.tables import app_tables
 import anvil.files
 from anvil.files import data_files
 import anvil.server
+import sqlite3
 
 # This is a server module. It runs on the Anvil server,
 # rather than in the user's browser.
@@ -14,7 +15,15 @@ import anvil.server
 #
 
 @anvil.server.callable
-def say_hello(name):
-  print("Hello, " + name + "!")
-  return 42
+def get_jugendherbergen():
+  conn = sqlite3.connect(data_files['jugendherberge.db'])
+  cursor = conn.cursor()
+  
+  results = list(cursor.execute('SELECT * FROM Jugendherberge'))
+  
+  print("Server", results)
+  
+  conn.commit()
+  conn.close()
 
+  return results
