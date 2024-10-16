@@ -27,3 +27,32 @@ def get_jugendherbergen():
   conn.close()
 
   return results
+
+@anvil.server.callable
+def get_zimmerDaten():
+  conn = sqlite3.connect(data_files['jugendherberge.db'])
+  cursor = conn.cursor()
+  
+  results = list(cursor.execute('''SELECT 
+      Zimmer.MaxPersonen,
+      Jugendherberge.ID AS Jugendherberge_ID,
+      Preiskategorie.Titel AS Preiskategorie_Titel
+  FROM 
+      Zimmer
+  JOIN 
+      ZimmerJugendherberge ON Zimmer.ID = ZimmerJugendherberge.ZimmerID
+  JOIN 
+      Jugendherberge ON ZimmerJugendherberge.JugendherbergeID = Jugendherberge.ID
+  JOIN 
+      ZimmerPreiskategorie ON Zimmer.ID = ZimmerPreiskategorie.ZimmerID
+  JOIN 
+      Preiskategorie ON ZimmerPreiskategorie.PreiskategorieID = Preiskategorie.ID
+  '''))
+
+  print("Server", results)
+  
+  conn.commit()
+  conn.close()
+
+  return results
+  
