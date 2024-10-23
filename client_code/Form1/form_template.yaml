@@ -20,7 +20,7 @@ components:
     name: button_2
     properties: {text: Register}
     type: Button
-  - layout_properties: {grid_position: 'CMVGAM,XWLYVX'}
+  - layout_properties: {grid_position: 'CMVGAM,XWLYVX', row_background: ''}
     name: button_2_copy
     properties: {text: Register}
     type: Button

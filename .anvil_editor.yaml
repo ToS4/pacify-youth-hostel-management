@@ -4,9 +4,9 @@ unique_ids:
     theme.css: A4IRC42FDWEJAARD3NSLXH4B6IY46PKM
   forms:
     Form1: '1729675128116697321229701.6544'
-    Form2: '1729675457851688509290090.4663'
     Startseite: RXOYOSBSJC6O464ZCW6RJ5TYTTGJFFSU
     Startseite.RowTemplate1: '1729071687272995822836602.442'
+    Statistik: '1729675457851688509290090.4663'
   modules: {}
   scripts: {}
   server_modules:
