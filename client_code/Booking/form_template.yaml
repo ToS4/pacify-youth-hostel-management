@@ -29,6 +29,14 @@ components:
   name: navbar_links
   properties: {}
   type: FlowPanel
+- layout_properties: {slot: title}
+  name: label_3
+  properties: {text: Booking}
+  type: Label
+- layout_properties: {slot: top-left-btn}
+  name: image_1
+  properties: {display_mode: zoom_to_fill, height: 36.79998779296875, source: _/theme/pacify.png}
+  type: Image
 container:
   properties: {html: '@theme:standard-page.html'}
   type: HtmlTemplate

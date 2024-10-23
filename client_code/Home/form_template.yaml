@@ -13,8 +13,10 @@ components:
     name: data_grid_1
     properties:
       columns:
-      - {data_key: AnzahlPersonen, id: JKSDUP, title: Anzahl Personen}
-      - {data_key: Preiskategorie, id: VJQQOR, title: Preiskategorie}
+      - {data_key: roomNr, id: EZTYLH, title: Room Number}
+      - {data_key: countBeds, id: JKSDUP, title: Beds}
+      - {data_key: priceCategory, id: VJQQOR, title: Price Category}
+      - {data_key: column_1, id: IFHBWM, title: ''}
     type: DataGrid
   layout_properties: {slot: default}
   name: content_panel
@@ -32,8 +34,12 @@ components:
   type: FlowPanel
 - layout_properties: {slot: title}
   name: label_1
-  properties: {text: Jugendherberge - Startseite}
+  properties: {text: Home}
   type: Label
+- layout_properties: {slot: top-left-btn}
+  name: image_1
+  properties: {display_mode: zoom_to_fill, height: 36.79998779296875, source: _/theme/pacify.png}
+  type: Image
 container:
   properties: {html: '@theme:standard-page.html'}
   type: HtmlTemplate

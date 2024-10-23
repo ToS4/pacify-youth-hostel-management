@@ -16,8 +16,8 @@ components:
     name: text_box_password
     properties: {}
     type: TextBox
-  - event_bindings: {click: button_2_click}
-    layout_properties: {full_width_row: true, grid_position: 'CMVGAM,ZWPXBK'}
+  - event_bindings: {click: button_login_click}
+    layout_properties: {grid_position: 'CMVGAM,FKPKEM'}
     name: button_login
     properties: {text: Login}
     type: Button
@@ -38,6 +38,10 @@ components:
   name: label_1
   properties: {text: Jugendherberge - Register / Login}
   type: Label
+- layout_properties: {slot: top-left-btn}
+  name: image_1
+  properties: {display_mode: zoom_to_fill, height: 36.79998779296875, source: _/theme/pacify.png}
+  type: Image
 container:
   properties: {html: '@theme:standard-page.html'}
   type: HtmlTemplate

@@ -1,12 +1,45 @@
 components:
-- layout_properties: {slot: default}
+- components:
+  - layout_properties: {grid_position: 'DHUGZB,PEWGHH'}
+    name: label_username
+    properties: {text: 'Hello, {username}'}
+    type: Label
+  - components:
+    - name: repeating_panel_1
+      properties: {item_template: Statistics.RowTemplate2}
+      type: RepeatingPanel
+    layout_properties: {grid_position: 'CGUYUH,MGKDNP'}
+    name: data_grid_1
+    properties:
+      columns:
+      - {data_key: roomNr, expand: false, id: JKSDUP, title: Room Number, width: 131.20001220703125}
+      - {data_key: countBeds, expand: false, id: VJQQOR, title: Beds, width: 109.5999755859375}
+      - {data_key: priceCategory, expand: false, id: OJLQEN, title: Price Category, width: 129.20001220703125}
+      - {data_key: location, expand: false, id: IZQPGA, title: Location, width: 110.79998779296875}
+      - {data_key: timestamp, id: DWSEEU, title: Timestamp}
+      - {data_key: price, expand: false, id: ECJKCA, title: Price, width: 128.5999755859375}
+    type: DataGrid
+  layout_properties: {slot: default}
   name: content_panel
   properties: {}
   type: ColumnPanel
-- layout_properties: {slot: nav-right}
+- components:
+  - layout_properties: {}
+    name: button_login_register
+    properties: {enabled: false, text: '{username}'}
+    type: Button
+  layout_properties: {slot: nav-right}
   name: navbar_links
   properties: {}
   type: FlowPanel
+- layout_properties: {slot: title}
+  name: label_1
+  properties: {text: Statistics}
+  type: Label
+- layout_properties: {slot: top-left-btn}
+  name: image_1
+  properties: {display_mode: zoom_to_fill, height: 36.79998779296875, source: _/theme/pacify.png}
+  type: Image
 container:
   properties: {html: '@theme:standard-page.html'}
   type: HtmlTemplate

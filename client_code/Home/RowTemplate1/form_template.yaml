@@ -1,3 +1,8 @@
-components: []
+components:
+- event_bindings: {click: button_book_click}
+  layout_properties: {column: IFHBWM}
+  name: button_book
+  properties: {text: button_1}
+  type: Button
 container: {type: DataRowPanel}
 is_package: true

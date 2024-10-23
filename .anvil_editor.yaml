@@ -1,5 +1,6 @@
 unique_ids:
   assets:
+    pacify.png: '1729678111439175059490703.9196'
     standard-page.html: TK22FBLHCOJKRFMJF6IAB67LVLJ3QJK2
     theme.css: A4IRC42FDWEJAARD3NSLXH4B6IY46PKM
   forms:
@@ -8,6 +9,7 @@ unique_ids:
     Home.RowTemplate1: '1729071687272995822836602.442'
     LoginRegister: '1729675128116697321229701.6544'
     Statistics: '1729675457851688509290090.4663'
+    Statistics.RowTemplate2: '1729677413082215729673482.08926'
   modules: {}
   scripts: {}
   server_modules:
