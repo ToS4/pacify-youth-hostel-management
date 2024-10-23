@@ -34,3 +34,7 @@ class Startseite(StartseiteTemplate):
   def drop_down_1_change(self, **event_args):
     """This method is called when an item is selected"""
     self.update_rooms()
+
+  def button_1_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    pass
