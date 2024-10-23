@@ -1,0 +1,27 @@
+components:
+- components:
+  - layout_properties: {grid_position: 'CBCUQP,TROJHT'}
+    name: date_picker_1
+    properties: {}
+    type: DatePicker
+  - layout_properties: {grid_position: 'DOWAJX,BUZNAU'}
+    name: date_picker_2
+    properties: {}
+    type: DatePicker
+  - event_bindings: {click: button_1_click}
+    layout_properties: {grid_position: 'URXKGT,QQKRPG'}
+    name: button_1
+    properties: {text: Bestellung ansehen}
+    type: Button
+  layout_properties: {slot: default}
+  name: content_panel
+  properties: {}
+  type: ColumnPanel
+- layout_properties: {slot: nav-right}
+  name: navbar_links
+  properties: {}
+  type: FlowPanel
+container:
+  properties: {html: '@theme:standard-page.html'}
+  type: HtmlTemplate
+is_package: true

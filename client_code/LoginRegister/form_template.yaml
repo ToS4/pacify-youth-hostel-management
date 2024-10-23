@@ -16,9 +16,10 @@ components:
     name: text_box_2
     properties: {}
     type: TextBox
-  - layout_properties: {full_width_row: true, grid_position: 'CMVGAM,ZWPXBK'}
-    name: button_2
-    properties: {text: Register}
+  - event_bindings: {click: button_2_click}
+    layout_properties: {full_width_row: true, grid_position: 'CMVGAM,ZWPXBK'}
+    name: button_login
+    properties: {text: Login}
     type: Button
   - layout_properties: {grid_position: 'CMVGAM,XWLYVX', row_background: ''}
     name: button_2_copy

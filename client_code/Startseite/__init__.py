@@ -36,5 +36,5 @@ class Startseite(StartseiteTemplate):
     self.update_rooms()
 
   def button_1_click(self, **event_args):
-    """This method is called when the button is clicked"""
+    open_form('LoginRegister')
     pass
