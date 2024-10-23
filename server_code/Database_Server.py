@@ -22,8 +22,6 @@ def get_jugendherbergen():
   results = list(cursor.execute('SELECT Name, ID FROM Jugendherberge'))
   
   print("Server", results)
-
-  print("Hallo")
   
   conn.commit()
   conn.close()
@@ -51,13 +49,9 @@ def get_zimmerDaten():
       Preiskategorie ON ZimmerPreiskategorie.PreiskategorieID = Preiskategorie.ID
   '''))
 
- print("Server", results)
+  print("Server", results)
   
   conn.commit()
   conn.close()
 
   return results
-
-
-def asdasd():
-  
