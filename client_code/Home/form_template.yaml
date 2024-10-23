@@ -7,7 +7,7 @@ components:
     type: DropDown
   - components:
     - name: repeating_panel_1
-      properties: {item_template: Startseite.RowTemplate1}
+      properties: {item_template: Home.RowTemplate1}
       type: RepeatingPanel
     layout_properties: {grid_position: 'IBGTHG,VYZTQQ'}
     name: data_grid_1
