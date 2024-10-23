@@ -5,7 +5,7 @@ components:
     properties: {text: Nutzername}
     type: Label
   - layout_properties: {grid_position: 'OYMKND,JZGFGT'}
-    name: text_box_1
+    name: text_box_username
     properties: {placeholder: '', text: ''}
     type: TextBox
   - layout_properties: {grid_position: 'ZWWDWW,YZAPRH'}

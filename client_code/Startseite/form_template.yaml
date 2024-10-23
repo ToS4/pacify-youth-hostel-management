@@ -21,9 +21,9 @@ components:
   properties: {col_widths: '{}'}
   type: ColumnPanel
 - components:
-  - event_bindings: {click: button_1_click}
+  - event_bindings: {click: button_login_register_click}
     layout_properties: {}
-    name: button_1
+    name: button_login_register
     properties: {text: Login / Register}
     type: Button
   layout_properties: {slot: nav-right}

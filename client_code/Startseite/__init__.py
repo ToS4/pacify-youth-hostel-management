@@ -35,6 +35,6 @@ class Startseite(StartseiteTemplate):
     """This method is called when an item is selected"""
     self.update_rooms()
 
-  def button_1_click(self, **event_args):
+  def button_login_register_click(self, **event_args):
     open_form('LoginRegister')
     pass
