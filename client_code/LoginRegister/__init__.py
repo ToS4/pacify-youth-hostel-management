@@ -11,6 +11,11 @@ class LoginRegister(LoginRegisterTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
+    #styling
+    self.button_login.background = "green"
+    self.button_register.background = "green" 
+    self.button_login.foreground = "white"
+    self.button_register.foreground = "white" 
     # Any code you write here will run before the form opens.
 
   def button_register_click(self, **event_args):

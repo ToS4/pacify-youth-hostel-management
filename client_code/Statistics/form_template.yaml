@@ -17,16 +17,16 @@ components:
       - {data_key: priceCategory, expand: false, id: OJLQEN, title: Price Category, width: 129.20001220703125}
       - {data_key: location, expand: false, id: IZQPGA, title: Location, width: 110.79998779296875}
       - {data_key: timestamp, expand: false, id: DWSEEU, title: Timestamp, width: 333}
-      - {data_key: price, expand: false, id: ECJKCA, title: Price, width: 134}
+      - {data_key: price, expand: false, id: ECJKCA, title: Price, width: 153}
     type: DataGrid
   layout_properties: {slot: default}
   name: content_panel
   properties: {}
   type: ColumnPanel
 - components:
-  - layout_properties: {}
-    name: button_login_register
-    properties: {enabled: false, text: '{username}'}
+  - event_bindings: {click: button_login_register_click}
+    name: button_login_logout
+    properties: {text: Login / Register}
     type: Button
   layout_properties: {slot: nav-right}
   name: navbar_links

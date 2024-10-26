@@ -12,6 +12,14 @@ class Home(HomeTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
+    #self.check_login()
+
+  """  
+  def check_login(self):
+    user_id = anvil.server.session.get('user_id')
+    if user_id is None:
+      anvil.open_form('LoginRegister')"""
+  
   def link_home_click(self, **event_args):
     open_form('Home')
     pass
@@ -24,6 +32,6 @@ class Home(HomeTemplate):
     open_form('Statistics')
     pass
 
-  def button_login_register_click(self, **event_args):
-    """This method is called when the button is clicked"""
+  def button_login_logout_click(self, **event_args):
+    open_form('LoginRegister')
     pass

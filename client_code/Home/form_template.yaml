@@ -2,24 +2,79 @@ components:
 - components:
   - layout_properties: {grid_position: 'PJVGGV,IEFMFZ'}
     name: label_3
-    properties: {align: center, bold: true, font: '', font_size: 35, text: Herzlich Willkommen in der Jugendherberge Vorarlberg!}
+    properties: {align: center, bold: true, font: '', font_size: 35, text: Welcome to Vorarlberg Youth Hostel!}
     type: Label
-  - layout_properties: {grid_position: 'DHATMT,QVYLJH'}
+  - layout_properties: {grid_position: 'DHATMT,QVYLJH LYQAQJ,BQDYEB'}
     name: label_4
-    properties: {align: center, text: Bei uns ist alt und jung willkommen.Ein Jugendherbergsausweis ist nicht zwingend notwendig um bei uns übernachten zu können.}
+    properties: {align: center, text: 'Young and old are welcome here, and a youth hostel card is not absolutely necessary to stay with us.'}
+    type: Label
+  - layout_properties: {grid_position: 'DHATMT,QVYLJH GNLOBW,NZHTEK'}
+    name: label_5
+    properties: {align: center, text: Our hostel has its own parking lot (also suitable for buses) which can be used free of charge by our guests.}
+    type: Label
+  - layout_properties: {grid_position: 'DHATMT,QVYLJH RDEMCY,XFDWZY'}
+    name: spacer_1
+    properties: {height: 32}
+    type: Spacer
+  - layout_properties: {grid_position: 'DHATMT,QVYLJH OZNRLJ,SHXHTU'}
+    name: label_6
+    properties: {align: center, text: Reception, underline: true}
+    type: Label
+  - layout_properties: {grid_position: 'DHATMT,QVYLJH OYRKNW,RCGFZN'}
+    name: label_6_copy
+    properties: {align: center, text: ' Check-in: 16:00 to 22:00'}
+    type: Label
+  - layout_properties: {grid_position: 'DHATMT,QVYLJH DXIFNP,OHSOXD'}
+    name: label_6_copy_copy
+    properties: {align: center, text: ' Check-out: 06:30 to 10:00 '}
+    type: Label
+  - layout_properties: {grid_position: 'DHATMT,QVYLJH DZQLYV,HNVVNA'}
+    name: spacer_2
+    properties: {height: 32}
+    type: Spacer
+  - layout_properties: {grid_position: 'DHATMT,QVYLJH YMSJTR,OQCJED'}
+    name: label_7
+    properties:
+      align: center
+      text: |
+        For booking inquiries please contact Mailoffice@jugendherberge-vorarlberg.at or call 0043 (0) 11122233344
     type: Label
   - layout_properties: {grid_position: 'DHATMT,ZEHKLQ'}
     name: image_1
-    properties: {height: 278, source: _/theme/Bild_2024-10-26_123836041.png}
+    properties: {height: 415, source: _/theme/jugendherberge.png}
     type: Image
+  - layout_properties: {grid_position: 'OPUUZJ,HNAWME'}
+    name: image_2
+    properties: {height: 338.33331298828125, source: _/theme/jugendherberge2.png}
+    type: Image
+  - layout_properties: {grid_position: 'OPUUZJ,OWEIFR ACYAFR,QRUBDA'}
+    name: label_3_copy
+    properties: {align: center, bold: true, font: '', font_size: 35, icon: 'fa:map-pin', text: Locations}
+    type: Label
+  - layout_properties: {grid_position: 'OPUUZJ,OWEIFR XPOBAX,VXXILP'}
+    name: label_8
+    properties: {align: center, text: Bludenz}
+    type: Label
+  - layout_properties: {grid_position: 'OPUUZJ,OWEIFR FEBQNM,NSTFWX'}
+    name: label_8_copy
+    properties: {align: center, text: Feldkirch}
+    type: Label
+  - layout_properties: {grid_position: 'OPUUZJ,OWEIFR XYOBTG,DEGFGI'}
+    name: label_8_copy_2
+    properties: {align: center, text: Dornbirn}
+    type: Label
+  - layout_properties: {grid_position: 'OPUUZJ,OWEIFR LNYZYK,UJAZVZ'}
+    name: label_8_copy_3
+    properties: {align: center, text: Bregenz}
+    type: Label
   layout_properties: {slot: default}
   name: content_panel
   properties: {col_widths: '{}'}
   type: ColumnPanel
 - components:
-  - event_bindings: {click: button_login_register_click}
+  - event_bindings: {click: button_login_logout_click}
     layout_properties: {}
-    name: button_login_register
+    name: button_login_logout
     properties: {text: Login / Register}
     type: Button
   layout_properties: {slot: nav-right}
@@ -28,7 +83,7 @@ components:
   type: FlowPanel
 - layout_properties: {slot: title}
   name: label_1
-  properties: {text: Book}
+  properties: {text: Home}
   type: Label
 - components:
   - layout_properties: {grid_position: 'JZYZEC,OHELWZ'}

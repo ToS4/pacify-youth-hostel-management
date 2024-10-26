@@ -22,7 +22,11 @@ components:
   name: content_panel
   properties: {col_widths: '{}'}
   type: ColumnPanel
-- components: []
+- components:
+  - event_bindings: {click: button_login_register_click}
+    name: button_login_logout
+    properties: {text: Login / Register}
+    type: Button
   layout_properties: {slot: nav-right}
   name: navbar_links
   properties: {}
