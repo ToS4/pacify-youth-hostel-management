@@ -13,9 +13,14 @@ class LoginRegister(LoginRegisterTemplate):
 
     #styling
     self.button_login.background = "green"
-    self.button_register.background = "green" 
     self.button_login.foreground = "white"
+    
+    self.button_register.background = "green" 
     self.button_register.foreground = "white" 
+
+    self.text_box_username.background = "white"
+    self.text_box_password.background = "white"
+    
     # Any code you write here will run before the form opens.
 
   def button_register_click(self, **event_args):

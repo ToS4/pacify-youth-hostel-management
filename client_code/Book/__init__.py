@@ -12,6 +12,7 @@ class Book(BookTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
+
   def link_home_click(self, **event_args):
     open_form('Home')
     pass

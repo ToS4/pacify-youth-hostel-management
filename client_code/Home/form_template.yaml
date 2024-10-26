@@ -18,7 +18,7 @@ components:
     type: Spacer
   - layout_properties: {grid_position: 'DHATMT,QVYLJH OZNRLJ,SHXHTU'}
     name: label_6
-    properties: {align: center, text: Reception, underline: true}
+    properties: {align: center, bold: true, text: Reception, underline: true}
     type: Label
   - layout_properties: {grid_position: 'DHATMT,QVYLJH OYRKNW,RCGFZN'}
     name: label_6_copy
