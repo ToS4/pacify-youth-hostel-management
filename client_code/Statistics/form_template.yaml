@@ -8,16 +8,16 @@ components:
     - name: repeating_panel_1
       properties: {item_template: Statistics.RowTemplate2}
       type: RepeatingPanel
-    layout_properties: {grid_position: 'CGUYUH,MGKDNP'}
+    layout_properties: {full_width_row: false, grid_position: 'CGUYUH,MGKDNP'}
     name: data_grid_1
     properties:
       columns:
-      - {data_key: roomNr, expand: false, id: JKSDUP, title: Room Number, width: 131.20001220703125}
-      - {data_key: countBeds, expand: false, id: VJQQOR, title: Beds, width: 109.5999755859375}
+      - {data_key: roomNr, expand: false, id: JKSDUP, title: Room Number, width: 131}
+      - {data_key: countBeds, expand: false, id: VJQQOR, title: Beds, width: 111}
       - {data_key: priceCategory, expand: false, id: OJLQEN, title: Price Category, width: 129.20001220703125}
       - {data_key: location, expand: false, id: IZQPGA, title: Location, width: 110.79998779296875}
-      - {data_key: timestamp, id: DWSEEU, title: Timestamp}
-      - {data_key: price, expand: false, id: ECJKCA, title: Price, width: 128.5999755859375}
+      - {data_key: timestamp, expand: false, id: DWSEEU, title: Timestamp, width: 333}
+      - {data_key: price, expand: false, id: ECJKCA, title: Price, width: 134}
     type: DataGrid
   layout_properties: {slot: default}
   name: content_panel
@@ -40,6 +40,29 @@ components:
   name: image_1
   properties: {display_mode: zoom_to_fill, height: 36.79998779296875, source: _/theme/pacify.png}
   type: Image
+- components:
+  - layout_properties: {grid_position: 'JZYZEC,OHELWZ'}
+    name: label_2
+    properties: {bold: true, font_size: 16, text: Navigation, underline: false}
+    type: Label
+  - event_bindings: {click: link_home_click}
+    layout_properties: {grid_position: 'YUGAVR,KPYJTN'}
+    name: link_home
+    properties: {icon: 'fa:home', text: Home}
+    type: Link
+  - layout_properties: {grid_position: 'LYVPMD,APUFFQ'}
+    name: link_book
+    properties: {icon: 'fa:book', text: Book}
+    type: Link
+  - event_bindings: {click: link_statistics_click}
+    layout_properties: {grid_position: 'BBQUHO,VHDMCE'}
+    name: link_statistics
+    properties: {bold: true, icon: 'fa:bar-chart', icon_align: left, text: Statistics}
+    type: Link
+  layout_properties: {slot: left-nav}
+  name: column_panel_1
+  properties: {}
+  type: ColumnPanel
 container:
   properties: {html: '@theme:standard-page.html'}
   type: HtmlTemplate

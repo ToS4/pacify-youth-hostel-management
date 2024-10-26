@@ -13,6 +13,6 @@ class Booking(BookingTemplate):
 
     # Any code you write here will run before the form opens.
 
-  def button_1_click(self, **event_args):
+  def button_book_booking_click(self, **event_args):
     open_form('Statistik')
     pass

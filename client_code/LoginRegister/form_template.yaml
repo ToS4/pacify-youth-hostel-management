@@ -2,7 +2,7 @@ components:
 - components:
   - layout_properties: {grid_position: 'ZWBWFZ,IWZFCU'}
     name: label_username
-    properties: {text: Username}
+    properties: {icon: 'fa:address-book', text: Username}
     type: Label
   - layout_properties: {grid_position: 'OYMKND,JZGFGT'}
     name: text_box_username
@@ -10,7 +10,7 @@ components:
     type: TextBox
   - layout_properties: {grid_position: 'ZWWDWW,YZAPRH'}
     name: label_password
-    properties: {text: Password}
+    properties: {icon: 'fa:lock', text: Password}
     type: Label
   - layout_properties: {grid_position: 'WMIYQQ,RFMARB'}
     name: text_box_password

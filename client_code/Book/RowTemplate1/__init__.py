@@ -13,8 +13,8 @@ class RowTemplate1(RowTemplate1Template):
 
     # Any code you write here will run before the form opens.
 
-  def button_book_click(self, **event_args):
+  def button_book_home_click(self, **event_args):
     """This method is called when the button is clicked"""
-    roomNr = self.
+    
     open_form('Booking')
     pass
