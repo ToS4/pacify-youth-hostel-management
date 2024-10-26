@@ -50,9 +50,10 @@ components:
     name: link_home
     properties: {icon: 'fa:home', text: Home}
     type: Link
-  - layout_properties: {grid_position: 'LYVPMD,APUFFQ'}
+  - event_bindings: {click: link_book_click}
+    layout_properties: {grid_position: 'LYVPMD,APUFFQ'}
     name: link_book
-    properties: {icon: 'fa:book', text: Book}
+    properties: {bold: false, icon: 'fa:book', text: Book}
     type: Link
   - event_bindings: {click: link_statistics_click}
     layout_properties: {grid_position: 'BBQUHO,VHDMCE'}
