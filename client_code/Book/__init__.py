@@ -5,9 +5,6 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
 
-from ..Statistics import Statistics
-
-
 
 class Book(BookTemplate):
   def __init__(self, **properties):
@@ -39,7 +36,7 @@ class Book(BookTemplate):
 
     self.repeating_panel_1.items = new_repeating_panel_1_items
   
-  def drop_down_1_change(self, **event_args):
+  def drop_down_location_change(self, **event_args):
     """This method is called when an item is selected"""
     self.update_rooms()
 
