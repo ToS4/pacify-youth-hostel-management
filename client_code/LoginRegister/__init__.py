@@ -15,9 +15,10 @@ class LoginRegister(LoginRegisterTemplate):
 
   def button_register_click(self, **event_args):
     """This method is called when the button is clicked"""
+    open_form('Home')
     pass
 
   def button_login_click(self, **event_args):
     """This method is called when the button is clicked"""
-    open_form('Home', username="Max") # Backend
+    open_form('Home')
     pass

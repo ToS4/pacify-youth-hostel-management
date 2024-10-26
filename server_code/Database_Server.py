@@ -15,43 +15,35 @@ import sqlite3
 #
 
 @anvil.server.callable
-def get_jugendherbergen():
-  conn = sqlite3.connect(data_files['jugendherberge.db'])
-  cursor = conn.cursor()
+def get_all_jugendherberge():
+  db_path="database.db"
   
-  results = list(cursor.execute('SELECT Name, ID FROM Jugendherberge'))
+  # Connect to the SQLite database
+  connection = sqlite3.connect(db_path)
+  cursor = connection.cursor()
   
-  print("Server", results)
+  # Execute the query to get all Jugendherberge data
+  cursor.execute("SELECT JID, Name, Address FROM Jugendherberge;")
+  jugendherberge_data = cursor.fetchall()
   
-  conn.commit()
-  conn.close()
-
-  return results
+  # Close the connection
+  connection.close()
+  
+  return jugendherberge_data
 
 @anvil.server.callable
-def get_zimmerDaten():
-  conn = sqlite3.connect(data_files['jugendherberge.db'])
-  cursor = conn.cursor()
-  
-  results = list(cursor.execute('''SELECT 
-      Zimmer.MaxPersonen,
-      Jugendherberge.ID AS Jugendherberge_ID,
-      Preiskategorie.Titel AS Preiskategorie_Titel
-  FROM 
-      Zimmer
-  JOIN 
-      ZimmerJugendherberge ON Zimmer.ID = ZimmerJugendherberge.ZimmerID
-  JOIN 
-      Jugendherberge ON ZimmerJugendherberge.JugendherbergeID = Jugendherberge.ID
-  JOIN 
-      ZimmerPreiskategorie ON Zimmer.ID = ZimmerPreiskategorie.ZimmerID
-  JOIN 
-      Preiskategorie ON ZimmerPreiskategorie.PreiskategorieID = Preiskategorie.ID
-  '''))
+def get_rooms_by_jugendherberge(jugendherberge_id):
+  db_path="database.db"
 
-  print("Server", results)
-  
-  conn.commit()
-  conn.close()
+  # Connect to the SQLite database
+  connection = sqlite3.connect(db_path)
+  cursor = connection.cursor()
 
-  return results
+  # Execute the query to get all rooms for the specified Jugendherberge ID
+  cursor.execute("SELECT RID, Beds, PID FROM Room WHERE JID = ?;", (jugendherberge_id,))
+  rooms = cursor.fetchall()
+
+  # Close the connection
+  connection.close()
+  
+  return rooms

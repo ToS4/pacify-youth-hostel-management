@@ -16,3 +16,17 @@ class Booking(BookingTemplate):
   def button_book_booking_click(self, **event_args):
     open_form('Statistik')
     pass
+
+  def link_home_click(self, **event_args):
+    open_form('Home')
+    pass
+
+  def link_book_click(self, **event_args):
+    open_form('Book')
+    pass
+
+  def link_statistics_click(self, **event_args):
+    open_form('Statistics')
+    pass
+
+  
