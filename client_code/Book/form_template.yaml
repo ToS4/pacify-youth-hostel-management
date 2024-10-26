@@ -22,12 +22,7 @@ components:
   name: content_panel
   properties: {col_widths: '{}'}
   type: ColumnPanel
-- components:
-  - event_bindings: {click: button_login_register_click}
-    layout_properties: {}
-    name: button_login_register
-    properties: {text: Login / Register}
-    type: Button
+- components: []
   layout_properties: {slot: nav-right}
   name: navbar_links
   properties: {}
@@ -46,7 +41,8 @@ components:
     name: link_home
     properties: {bold: false, icon: 'fa:home', text: Home}
     type: Link
-  - layout_properties: {grid_position: 'AWBAGX,MJLVIY'}
+  - event_bindings: {click: link_book_click}
+    layout_properties: {grid_position: 'AWBAGX,MJLVIY'}
     name: link_book
     properties: {bold: true, icon: 'fa:book', text: Book}
     type: Link

@@ -94,7 +94,7 @@ components:
     type: Link
   layout_properties: {slot: left-nav}
   name: column_panel_1
-  properties: {}
+  properties: {visible: true}
   type: ColumnPanel
 container:
   properties: {html: '@theme:standard-page.html'}
