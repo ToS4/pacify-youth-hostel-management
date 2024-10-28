@@ -15,14 +15,11 @@ class Statistics(StatisticsTemplate):
 
   def link_home_click(self, **event_args):
     open_form('Home')
-    pass
 
   def link_book_click(self, **event_args):
     open_form('Book')
-    pass
 
   def link_statistics_click(self, **event_args):
     open_form('Statistics')
-    pass
 
   

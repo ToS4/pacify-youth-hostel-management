@@ -22,11 +22,12 @@ class LoginRegister(LoginRegisterTemplate):
   
     # Any code you write here will run before the form opens.
 
-  def display_message(self, success, msg):
+  def handle_response(self, success, msg):
     self.label_responseMsg.text = ""
     self.label_responseMsg.foreground = "red"
     if success:
       self.label_responseMsg.foreground = "green"
+      open_form('Home')
     self.label_responseMsg.text = msg
     
   def button_register_click(self, **event_args):
@@ -36,7 +37,7 @@ class LoginRegister(LoginRegisterTemplate):
     password = self.text_box_password.text
 
     success, msg = anvil.server.call('register', username, password)
-    self.display_message(success, msg)
+    self.handle_response(success, msg)
 
   def button_login_click(self, **event_args):
     """This method is called when the button is clicked"""
@@ -45,6 +46,6 @@ class LoginRegister(LoginRegisterTemplate):
     password = self.text_box_password.text
 
     success, msg = anvil.server.call('login', username, password)
-    self.display_message(success, msg)
+    self.handle_response(success, msg)
 
     

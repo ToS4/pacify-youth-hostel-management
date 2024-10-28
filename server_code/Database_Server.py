@@ -99,7 +99,13 @@ def get_rooms_by_jugendherberge(jugendherberge_id):
   cursor = connection.cursor()
 
   # Execute the query to get all rooms for the specified Jugendherberge ID
-  cursor.execute("SELECT RID, Beds, PID FROM Room WHERE JID = ?;", (jugendherberge_id,))
+  cursor.execute("""
+        SELECT Room.RID, Room.Beds, PriceCategory.Name AS PriceCategoryName
+        FROM Room
+        JOIN PriceCategory ON Room.PID = PriceCategory.PID
+        WHERE Room.JID = ?;
+    """, (jugendherberge_id,))
+  
   rooms = cursor.fetchall()
 
   # Close the connection
