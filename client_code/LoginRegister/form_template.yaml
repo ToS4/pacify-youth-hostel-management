@@ -35,6 +35,10 @@ components:
     name: button_register
     properties: {text: Register}
     type: Button
+  - layout_properties: {grid_position: 'TJJLNC,TXPDQS TXJPFI,AFUNRU LYUWTR,JKYKZA'}
+    name: label_responseMsg
+    properties: {align: center, bold: true, foreground: red}
+    type: Label
   layout_properties: {slot: default}
   name: content_panel
   properties: {col_widths: '{"ZETRCQ":20,"TXPDQS":40,"AFUNRU":35,"HYWTZV":25}'}

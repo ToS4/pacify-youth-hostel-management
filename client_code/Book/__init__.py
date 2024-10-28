@@ -12,6 +12,9 @@ class Book(BookTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
+    stuff = anvil.server.call('get_all_jugendherberge')
+    print(stuff)
+
 
   def link_home_click(self, **event_args):
     open_form('Home')
