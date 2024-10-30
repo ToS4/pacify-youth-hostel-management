@@ -12,6 +12,9 @@ class Statistics(StatisticsTemplate):
     self.init_components(**properties)
 
     # Any code you write here will run before the form opens.
+    userId = anvil.server.call('get_user_id')
+    bookings = anvil.server.call('get_bookings_by_user', userId)
+    print(bookings)
 
   def link_home_click(self, **event_args):
     open_form('Home')

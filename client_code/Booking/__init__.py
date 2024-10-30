@@ -11,7 +11,12 @@ class Booking(BookingTemplate):
     self.init_components(**properties)
 
     # Any code you write here will run before the form opens.
+    roomNr = properties["roomNr"]
+    beds = properties["beds"]
+    priceCategory = properties["priceCategory"]
 
+    print(roomNr, beds, priceCategory)
+    
   def button_book_booking_click(self, **event_args):
     open_form('Statistics')
 

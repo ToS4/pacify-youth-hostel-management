@@ -114,4 +114,32 @@ def get_rooms_by_jugendherberge(jugendherberge_id):
 
 @anvil.server.callable
 def get_bookings_by_user(user_id):
-  pass
+  # Connect to the SQLite database
+  connection = sqlite3.connect(db_path)
+  cursor = connection.cursor()
+
+  cursor.execute("""
+        SELECT 
+            Room.RID AS RoomRID, 
+            book.Startdate, 
+            book.Enddate, 
+            Room.Beds AS RoomBeds, 
+            PriceCategory.Name AS PriceCategoryName,
+            Jugendherberge.Address AS JugendherbergeAddress
+        FROM 
+            book
+        JOIN 
+            Room ON book.RID = Room.RID
+        JOIN 
+            PriceCategory ON Room.PID = PriceCategory.PID
+        JOIN 
+            Jugendherberge ON Room.JID = Jugendherberge.JID
+        WHERE 
+            book.UID = ?;
+    """, (user_id,))
+  
+  bookings = cursor.fetchall()
+
+  # Close the connection
+  connection.close()
+  return bookings
