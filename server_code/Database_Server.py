@@ -27,7 +27,6 @@ def get_user_id():
   userId = anvil.server.session.get('userId', None)
   return userId
   
-
 @anvil.server.callable
 def login(username, password):
   connection = sqlite3.connect(db_path)
@@ -112,3 +111,7 @@ def get_rooms_by_jugendherberge(jugendherberge_id):
   connection.close()
   
   return rooms
+
+@anvil.server.callable
+def get_bookings_by_user(user_id):
+  pass
