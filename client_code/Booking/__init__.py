@@ -41,7 +41,7 @@ class Booking(BookingTemplate):
         return price
 
     def update_price(self):
-        print(f"Start date: {self.date_picker_startdate.date}, End date: {self.date_picker_enddate.date}")  # Debugging-Ausgabe
+        print(f"Start date: {self.date_picker_startdate.date}, End date: {self.date_picker_enddate.date}")
         if self.date_picker_startdate.date and self.date_picker_enddate.date:
             delta = (self.date_picker_enddate.date - self.date_picker_startdate.date).days
             print(f"Delta: {delta}") 
@@ -69,7 +69,7 @@ class Booking(BookingTemplate):
 
     def button_book_booking_click(self, **event_args):
         if self.date_picker_startdate.date and self.date_picker_enddate.date and self.total_price > 0:
-            app_tables.bookings.add_row(
+            app_tables.book.add_row(                  # book tabelle nicht gefunden
                 room_nr=self.roomNr,
                 start_date=self.date_picker_startdate.date,
                 end_date=self.date_picker_enddate.date,
@@ -78,6 +78,7 @@ class Booking(BookingTemplate):
             open_form('Statistics')
         else:
             alert("Bitte wählen Sie gültige Daten und versuchen Sie es erneut.")
+
 
     def link_home_click(self, **event_args):
         open_form('Home')
