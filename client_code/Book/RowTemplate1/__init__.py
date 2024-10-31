@@ -16,8 +16,7 @@ class RowTemplate1(RowTemplate1Template):
 
   def button_book_home_click(self, **event_args):
     """This method is called when the button is clicked"""
-    
-    open_form('Booking', roomNr = self.item['roomNr'], beds = self.item['countBeds'], priceCategory = self.item['priceCategory'])
+    open_form('Booking', roomNr=self.item['roomNr'], beds=self.item['countBeds'], priceCategory=self.item['priceCategory'])
 
     
     
