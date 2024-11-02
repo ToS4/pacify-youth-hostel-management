@@ -3,6 +3,8 @@ from anvil import *
 import anvil.tables as tables
 from anvil.tables import app_tables
 import datetime
+import anvil.server
+
 
 class Booking(BookingTemplate):
     def __init__(self, **properties):
@@ -69,15 +71,20 @@ class Booking(BookingTemplate):
 
     def button_book_booking_click(self, **event_args):
         if self.date_picker_startdate.date and self.date_picker_enddate.date and self.total_price > 0:
-            app_tables.book.add_row(                  # book tabelle nicht gefunden
-                room_nr=self.roomNr,
-                start_date=self.date_picker_startdate.date,
-                end_date=self.date_picker_enddate.date,
-                price=self.total_price
-            )
-            open_form('Statistics')
+            try:
+                anvil.server.call(
+                    'save_booking',
+                    room_nr=self.roomNr,
+                    start_date=self.date_picker_startdate.date,
+                    end_date=self.date_picker_enddate.date,
+                    price=self.total_price
+                )
+                open_form('Statistics')
+            except Exception as e:
+                alert(f"Fehler beim Speichern der Buchung: {e}")
         else:
             alert("Bitte wählen Sie gültige Daten und versuchen Sie es erneut.")
+
 
 
     def link_home_click(self, **event_args):
