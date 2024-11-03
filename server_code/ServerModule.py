@@ -93,24 +93,23 @@ def get_all_jugendherberge():
 
 @anvil.server.callable
 def get_rooms_by_jugendherberge(jugendherberge_id):
-  # Connect to the SQLite database
-  connection = sqlite3.connect(db_path)
-  cursor = connection.cursor()
+    connection = sqlite3.connect(db_path)
+    cursor = connection.cursor()
 
-  # Execute the query to get all rooms for the specified Jugendherberge ID
-  cursor.execute("""
-        SELECT Room.RID, Room.Beds, PriceCategory.Name AS PriceCategoryName
+    cursor.execute("""
+        SELECT Room.RoomNr, Room.Beds, PriceCategory.Name AS PriceCategoryName
         FROM Room
         JOIN PriceCategory ON Room.PID = PriceCategory.PID
         WHERE Room.JID = ?;
     """, (jugendherberge_id,))
   
-  rooms = cursor.fetchall()
+    rooms = cursor.fetchall()
 
-  # Close the connection
-  connection.close()
+    # Close the connection
+    connection.close()
   
-  return rooms
+    return rooms
+
 
 @anvil.server.callable
 def get_bookings_by_user(user_id):
@@ -145,26 +144,23 @@ def get_bookings_by_user(user_id):
   return bookings
 
 
-
 @anvil.server.callable
 def save_booking(room_nr, start_date, end_date, price):
-
     connection = None
     try:
-        connection = sqlite3.connect(db_path) 
+        connection = sqlite3.connect(db_path)
         cursor = connection.cursor()
-      
+
         insert_query = """
         INSERT INTO book (RoomNr, Startdate, Enddate, price)
         VALUES (?, ?, ?, ?)
         """
-      
+
         parameters = (room_nr, start_date, end_date, price)
 
         cursor.execute(insert_query, parameters)
-        
         connection.commit()
-        print("Buchung erfolgreich gespeichert.") 
+        print("Buchung erfolgreich gespeichert.")
 
     except sqlite3.Error as e:
         print(f"Fehler beim Speichern der Buchung: {e}")
