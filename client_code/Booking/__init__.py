@@ -10,24 +10,25 @@ class Booking(BookingTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)
 
-        self.roomNr = properties["roomNr"]
+        self.RID = properties["RID"] 
         self.beds = properties["beds"]
         self.priceCategory = properties["priceCategory"]
 
         self.label_beds.text = f"{self.beds} beds" if self.beds else "N/A"
-        self.label_location.text = f"Room {self.roomNr}" if self.roomNr else "N/A"
+        self.label_location.text = f"Room {self.RID}" if self.RID else "N/A"
         self.label_priceCategory.text = self.priceCategory if self.priceCategory else "N/A"
 
         today = datetime.date.today()
         self.date_picker_startdate.date = today
-        self.date_picker_startdate.min_date = today 
+        self.date_picker_startdate.min_date = today
 
         self.date_picker_enddate.date = None
         self.date_picker_enddate.min_date = today + datetime.timedelta(days=1)
-        
+
         self.price_per_night = self.get_price_per_night()
         self.total_price = self.price_per_night
         self.label_price.text = f"Total Price: ${self.total_price}"
+
 
     def get_price_per_night(self):
         if self.priceCategory == "Standard":
@@ -74,7 +75,7 @@ class Booking(BookingTemplate):
             try:
                 anvil.server.call(
                     'save_booking',
-                    room_nr=self.RID,
+                    RID=self.RID,  
                     start_date=self.date_picker_startdate.date,
                     end_date=self.date_picker_enddate.date,
                     price=self.total_price
@@ -84,6 +85,8 @@ class Booking(BookingTemplate):
                 alert(f"Fehler beim Speichern der Buchung: {e}")
         else:
             alert("Bitte wählen Sie gültige Daten und versuchen Sie es erneut.")
+    
+
 
 
 

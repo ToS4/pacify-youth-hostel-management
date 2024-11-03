@@ -147,20 +147,18 @@ def get_bookings_by_user(user_id):
 
 
 @anvil.server.callable
-def save_booking(room_nr, start_date, end_date, price):
-
+def save_booking(RID, start_date, end_date, price):
     connection = None
     try:
         connection = sqlite3.connect(db_path) 
         cursor = connection.cursor()
-      
+
         insert_query = """
-        INSERT INTO book (RoomNr, Startdate, Enddate, price)
+        INSERT INTO book (RID, Startdate, Enddate, price)
         VALUES (?, ?, ?, ?)
         """
-      
-        parameters = (room_nr, start_date, end_date, price)
-
+        
+        parameters = (RID, start_date, end_date, price)
         cursor.execute(insert_query, parameters)
         
         connection.commit()
