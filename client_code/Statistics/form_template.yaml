@@ -9,7 +9,7 @@ components:
       properties: {item_template: Statistics.RowTemplate2}
       type: RepeatingPanel
     layout_properties: {full_width_row: false, grid_position: 'CGUYUH,MGKDNP'}
-    name: data_grid_1
+    name: data_grid_bookings
     properties:
       columns:
       - {data_key: roomNr, expand: false, id: JKSDUP, title: Room Number, width: 131}

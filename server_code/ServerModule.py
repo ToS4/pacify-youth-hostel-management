@@ -109,58 +109,59 @@ def get_rooms_by_jugendherberge(jugendherberge_id):
     connection.close()
   
     return rooms
-
+    
 
 @anvil.server.callable
 def get_bookings_by_user(user_id):
-  # Connect to the SQLite database
-  connection = sqlite3.connect(db_path)
-  cursor = connection.cursor()
+    connection = sqlite3.connect(db_path)
+    cursor = connection.cursor()
 
-  cursor.execute("""
-        SELECT 
-            Room.RID AS RoomRID, 
-            book.Startdate, 
-            book.Enddate, 
-            Room.Beds AS RoomBeds, 
-            PriceCategory.Name AS PriceCategoryName,
-            Jugendherberge.Address AS JugendherbergeAddress
-        FROM 
-            book
-        JOIN 
-            Room ON book.RID = Room.RID
-        JOIN 
-            PriceCategory ON Room.PID = PriceCategory.PID
-        JOIN 
-            Jugendherberge ON Room.JID = Jugendherberge.JID
-        WHERE 
-            book.UID = ?;
+    cursor.execute("""
+    SELECT 
+        Room.RoomNr AS roomNr,  -- Eindeutige Angabe
+        book.Startdate AS startdate,
+        book.Enddate AS enddate,
+        Room.Beds AS countBeds,
+        PriceCategory.Name AS priceCategoryName,
+        Jugendherberge.Address AS location,
+        book.price
+    FROM 
+        book
+    JOIN 
+        Room ON book.RID = Room.RID
+    JOIN 
+        PriceCategory ON Room.PID = PriceCategory.PID
+    JOIN 
+        Jugendherberge ON Room.JID = Jugendherberge.JID
+    WHERE 
+        book.UID = ?;  
     """, (user_id,))
   
-  bookings = cursor.fetchall()
+    bookings = cursor.fetchall()
+    connection.close()
+    return bookings
 
-  # Close the connection
-  connection.close()
-  return bookings
 
 
 @anvil.server.callable
 def save_booking(room_nr, start_date, end_date, price):
     connection = None
     try:
-        connection = sqlite3.connect(db_path)
+        connection = sqlite3.connect(db_path) 
         cursor = connection.cursor()
 
         insert_query = """
-        INSERT INTO book (RoomNr, Startdate, Enddate, price)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO book (RoomNr, Startdate, Enddate, price, UID)
+        VALUES (?, ?, ?, ?, ?)
         """
-
-        parameters = (room_nr, start_date, end_date, price)
+        
+        userId = anvil.server.call('get_user_id')
+        parameters = (room_nr, start_date, end_date, price, userId)
 
         cursor.execute(insert_query, parameters)
+        
         connection.commit()
-        print("Buchung erfolgreich gespeichert.")
+        print("Buchung erfolgreich gespeichert.") 
 
     except sqlite3.Error as e:
         print(f"Fehler beim Speichern der Buchung: {e}")

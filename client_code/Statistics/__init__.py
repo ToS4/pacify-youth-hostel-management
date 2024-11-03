@@ -1,28 +1,37 @@
 from ._anvil_designer import StatisticsTemplate
 from anvil import *
-import plotly.graph_objects as go
 import anvil.server
-import anvil.tables as tables
-import anvil.tables.query as q
-from anvil.tables import app_tables
 
 class Statistics(StatisticsTemplate):
-  def __init__(self, **properties):
-    # Set Form properties and Data Bindings.
-    self.init_components(**properties)
+    def __init__(self, **properties):
+        self.init_components(**properties)
 
-    # Any code you write here will run before the form opens.
-    userId = anvil.server.call('get_user_id')
-    bookings = anvil.server.call('get_bookings_by_user', userId)
-    print(bookings)
+        userId = anvil.server.call('get_user_id')
+        bookings = anvil.server.call('get_bookings_by_user', userId)
+        print(bookings)
 
-  def link_home_click(self, **event_args):
-    open_form('Home')
+        self.data_grid_bookings.items = self.prepare_data_for_grid(bookings)
 
-  def link_book_click(self, **event_args):
-    open_form('Book')
+    def prepare_data_for_grid(self, bookings):
+        prepared_data = []
+        for booking in bookings:
+            prepared_data.append({
+                'roomNr': booking[1],               
+                'countBeds': booking[2],          
+                'priceCategory': booking[3],          
+                'location': booking[4],                
+                'startdate': booking[5],             
+                'enddate': booking[6],                
+                'price': booking[7]                   
+            })
+        print(f"Prepared data for grid: {prepared_data}") 
+        return prepared_data
 
-  def link_statistics_click(self, **event_args):
-    open_form('Statistics')
+    def link_home_click(self, **event_args):
+        open_form('Home')
 
-  
+    def link_book_click(self, **event_args):
+        open_form('Book')
+
+    def link_statistics_click(self, **event_args):
+        open_form('Statistics')
