@@ -24,7 +24,7 @@ class Statistics(StatisticsTemplate):
                 'enddate': booking[6],                
                 'price': booking[7]                   
             })
-        print(f"Prepared data for grid: {prepared_data}") 
+        print(f"Prepared data for grid: {prepared_data}") # für debug
         return prepared_data
 
     def link_home_click(self, **event_args):
