@@ -9,14 +9,15 @@ class Home(HomeTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
-
     self.check_login()
 
   def check_login(self):
     userId = anvil.server.call('get_user_id')
     print(userId)
     if userId is None:
-      pass
+      self.button_login_logout.text = "Login / Register"
+    else:
+      self.button_login_logout.text = "Logout"
   
   def link_home_click(self, **event_args):
     open_form('Home')
@@ -28,4 +29,9 @@ class Home(HomeTemplate):
     open_form('Statistics')
 
   def button_login_logout_click(self, **event_args):
-    open_form('LoginRegister')
+    userId = anvil.server.call('get_user_id')
+    if userId is None:
+      open_form('LoginRegister')
+    else:
+      anvil.server.call('logout')
+
