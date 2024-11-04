@@ -35,6 +35,7 @@ class Booking(BookingTemplate):
       print(userId)
       if userId is None:
         self.button_login_logout.text = "Login / Register"
+        open_form('LoginRegister')
       else:
         self.button_login_logout.text = "Logout"
 
@@ -104,3 +105,10 @@ class Booking(BookingTemplate):
 
     def link_statistics_click(self, **event_args):
         open_form('Statistics')
+
+    def button_login_logout_click(self, **event_args):
+      userId = anvil.server.call('get_user_id')
+      if userId is None:
+        open_form('LoginRegister')
+      else:
+        anvil.server.call('logout')

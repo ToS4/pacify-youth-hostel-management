@@ -48,4 +48,11 @@ class LoginRegister(LoginRegisterTemplate):
     success, msg = anvil.server.call('login', username, password)
     self.handle_response(success, msg)
 
+  def button_login_logout_click(self, **event_args):
+    userId = anvil.server.call('get_user_id')
+    if userId is None:
+      open_form('LoginRegister')
+    else:
+      anvil.server.call('logout')
+
     

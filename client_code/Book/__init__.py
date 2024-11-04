@@ -27,6 +27,7 @@ class Book(BookTemplate):
     print(userId)
     if userId is None:
       self.button_login_logout.text = "Login / Register"
+      open_form('LoginRegister')
     else:
       self.button_login_logout.text = "Logout"
   

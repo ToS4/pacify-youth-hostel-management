@@ -116,9 +116,11 @@ def get_bookings_by_user(user_id):
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
 
+    print(user_id)
+  
     cursor.execute("""
     SELECT 
-        Room.RoomNr AS roomNr,  -- Eindeutige Angabe
+        Room.RoomNr AS roomNr,
         book.Startdate AS startdate,
         book.Enddate AS enddate,
         Room.Beds AS countBeds,
@@ -129,7 +131,7 @@ def get_bookings_by_user(user_id):
         book
     JOIN 
         Room ON book.RID = Room.RID
-    JOIN   um
+    JOIN 
         PriceCategory ON Room.PID = PriceCategory.PID
     JOIN 
         Jugendherberge ON Room.JID = Jugendherberge.JID
@@ -146,14 +148,15 @@ def get_bookings_by_user(user_id):
 @anvil.server.callable
 def save_booking(room_nr, start_date, end_date, price):
     connection = None
-    try:
+    try: 
         connection = sqlite3.connect(db_path) 
         cursor = connection.cursor()
 
         insert_query = """
-        INSERT INTO book (RoomNr, Startdate, Enddate, price, UID)
+        INSERT INTO book (Startdate, Enddate, price, UID, RoomNr)
         VALUES (?, ?, ?, ?, ?)
         """
+
         
         userId = anvil.server.call('get_user_id')
         parameters = (room_nr, start_date, end_date, price, userId)
@@ -161,6 +164,7 @@ def save_booking(room_nr, start_date, end_date, price):
         cursor.execute(insert_query, parameters)
         
         connection.commit()
+        print(insert_query + " | " + parameters)
         print("Buchung erfolgreich gespeichert.") 
 
     except sqlite3.Error as e:

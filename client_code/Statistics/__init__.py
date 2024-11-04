@@ -6,19 +6,20 @@ class Statistics(StatisticsTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)
 
+        self.check_login()
+      
         userId = anvil.server.call('get_user_id')
         bookings = anvil.server.call('get_bookings_by_user', userId)
         print(bookings)
 
-        self.data_grid_bookings.items = self.prepare_data_for_grid(bookings)
-
-        self.check_login()
+        self.data_grid_bookings.items = self.prepare_data_for_grid(bookings)    
 
     def check_login(self):
       userId = anvil.server.call('get_user_id')
       print(userId)
       if userId is None:
         self.button_login_logout.text = "Login / Register"
+        open_form('LoginRegister')
       else:
         self.button_login_logout.text = "Logout"
 
@@ -45,3 +46,10 @@ class Statistics(StatisticsTemplate):
 
     def link_statistics_click(self, **event_args):
         open_form('Statistics')
+
+    def button_login_logout_click(self, **event_args):
+      userId = anvil.server.call('get_user_id')
+      if userId is None:
+        open_form('LoginRegister')
+      else:
+        anvil.server.call('logout')
