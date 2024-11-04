@@ -64,6 +64,7 @@ def register(username, password):
     userId = cursor.lastrowid
     anvil.server.session["userId"] = userId
     connection.commit()
+    print(username,password)
     
     connection.close()
     return True, "Account successfully created"
@@ -129,7 +130,7 @@ def get_bookings_by_user(user_id):
         book
     JOIN 
         Room ON book.RID = Room.RID
-    JOIN 
+    JOIN   um
         PriceCategory ON Room.PID = PriceCategory.PID
     JOIN 
         Jugendherberge ON Room.JID = Jugendherberge.JID
