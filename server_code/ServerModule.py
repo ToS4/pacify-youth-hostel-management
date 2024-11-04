@@ -129,21 +129,19 @@ def get_bookings_by_user(user_id):
         book.price
     FROM 
         book
-    JOIN 
+    JOIN
         Room ON book.RID = Room.RID
     JOIN 
         PriceCategory ON Room.PID = PriceCategory.PID
     JOIN 
         Jugendherberge ON Room.JID = Jugendherberge.JID
-    WHERE 
+    WHERE
         book.UID = ?;  
     """, (user_id,))
   
     bookings = cursor.fetchall()
     connection.close()
     return bookings
-
-
 
 @anvil.server.callable
 def save_booking(room_nr, start_date, end_date, price):
