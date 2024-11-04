@@ -28,6 +28,15 @@ class Booking(BookingTemplate):
         self.price_per_night = self.get_price_per_night()
         self.total_price = self.price_per_night
         self.label_price.text = f"Total Price: ${self.total_price}"
+        self.check_login()
+
+    def check_login(self):
+      userId = anvil.server.call('get_user_id')
+      print(userId)
+      if userId is None:
+        self.button_login_logout.text = "Login / Register"
+      else:
+        self.button_login_logout.text = "Logout"
 
     def get_price_per_night(self):
         if self.priceCategory == "Standard":

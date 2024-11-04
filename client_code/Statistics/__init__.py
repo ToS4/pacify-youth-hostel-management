@@ -12,6 +12,16 @@ class Statistics(StatisticsTemplate):
 
         self.data_grid_bookings.items = self.prepare_data_for_grid(bookings)
 
+        self.check_login()
+
+    def check_login(self):
+      userId = anvil.server.call('get_user_id')
+      print(userId)
+      if userId is None:
+        self.button_login_logout.text = "Login / Register"
+      else:
+        self.button_login_logout.text = "Logout"
+
     def prepare_data_for_grid(self, bookings):
         prepared_data = []
         for booking in bookings:

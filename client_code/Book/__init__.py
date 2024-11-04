@@ -20,6 +20,15 @@ class Book(BookTemplate):
     self.drop_down_location.items = jugendherberge
 
     self.update_rooms()
+    self.check_login()
+
+  def check_login(self):
+    userId = anvil.server.call('get_user_id')
+    print(userId)
+    if userId is None:
+      self.button_login_logout.text = "Login / Register"
+    else:
+      self.button_login_logout.text = "Logout"
   
   
   def update_rooms(self):

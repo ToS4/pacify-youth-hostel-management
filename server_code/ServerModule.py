@@ -64,7 +64,6 @@ def register(username, password):
     userId = cursor.lastrowid
     anvil.server.session["userId"] = userId
     connection.commit()
-    print(username,password)
     
     connection.close()
     return True, "Account successfully created"
