@@ -93,5 +93,8 @@ class Book(BookTemplate):
   def drop_down_location_change(self, **event_args):
     #print(f"Dropdown geändert: {self.drop_down_location.selected_value}")
     self.update_rooms()
+
+  def link_settings_click(self, **event_args):
+    open_form('Settings')
     
 

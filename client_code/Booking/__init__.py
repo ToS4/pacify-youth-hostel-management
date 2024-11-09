@@ -179,3 +179,6 @@ Bitte wählen Sie andere Daten.""")
       if userId:
         anvil.server.call('logout')
       open_form('Home')
+
+    def link_settings_click(self, **event_args):
+      open_form('Settings')
