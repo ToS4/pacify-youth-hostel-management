@@ -36,7 +36,7 @@ class Statistics(StatisticsTemplate):
           }
           prepared_bookings.append(toAdd)
       
-      self.data_grid_bookings.items = prepared_bookings
+      self.repeating_panel_statistics.items = prepared_bookings
       #print(prepared_bookings)
       
     def link_home_click(self, **event_args):

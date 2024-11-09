@@ -5,7 +5,7 @@ components:
     properties: {text: 'Hello, {username}'}
     type: Label
   - components:
-    - name: repeating_panel_1
+    - name: repeating_panel_statistics
       properties: {item_template: Statistics.RowTemplate2}
       type: RepeatingPanel
     layout_properties: {full_width_row: false, grid_position: 'CGUYUH,MGKDNP'}
