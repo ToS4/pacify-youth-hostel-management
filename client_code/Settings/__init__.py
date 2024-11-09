@@ -14,11 +14,11 @@ class Settings(SettingsTemplate):
     username = anvil.server.call('get_username')
     if username:
       self.label_welcomer.text = f"Welcome, {username}"
-    profile_picture = anvil.server.call('get_profile_picture')
+    """profile_picture = anvil.server.call('get_profile_picture')
     if profile_picture:
       self.image_profilepicture.source = profile_picture
     else:
-      self.image_profilepicture.source = self.get_default_profile_picture()
+      self.image_profilepicture.source = self.get_default_profile_picture()"""
     
 
   def check_login(self):
@@ -26,7 +26,7 @@ class Settings(SettingsTemplate):
     #print(userId)
     if userId is None:
       self.button_login_logout.text = "Login / Register"
-      self.image_profilepicture.source = self.get_default_profile_picture()
+      #self.image_profilepicture.source = self.get_default_profile_picture()
       open_form('LoginRegister')
     else:
       self.button_login_logout.text = "Logout"
