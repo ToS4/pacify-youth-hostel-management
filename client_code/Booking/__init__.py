@@ -114,31 +114,35 @@ class Booking(BookingTemplate):
         anvil.server.call('logout')
                           
     def update_user_dropdown(self):
-      try:
-        usernames = anvil.server.call('get_all_users')
-        print(f"Users retrieved: {usernames}")
-        self.drop_down_addUser.items = [("", "Bitte wählen...")] + [(username, username) for username in usernames]
-        self.drop_down_addUser.selected_value = ""
-      except Exception as e:
-        alert(f"Fehler beim Abrufen der Benutzerdaten: {e}")
-    
+        try:
+            usernames = anvil.server.call('get_all_users')
+            print(f"Users retrieved: {usernames}")
+            self.drop_down_addUser.items = [("", "Bitte wählen...")] + [(username, username) for username in usernames]
+            self.drop_down_addUser.selected_value = ""
+        except Exception as e:
+            alert(f"Fehler beim Abrufen der Benutzerdaten: {e}")
+
+        
     def drop_down_addUser_change(self, **event_args):
-      selected_user = self.drop_down_addUser.selected_value
-      print("drop_down_addUser_change", "selected_user", selected_user)
-      if selected_user and selected_user != "":
-        current_items = self.repeating_panel_added_users.items
-        print("drop_down_addUser_change", current_items)
-        
-        toAdd = {
-            'addedUsers': selected_user,        
-            'remove_users': "Entfernen"
-        }
-        
-        current_items.append(toAdd)
-        
-        self.data_grid_Added_Users.items = current_items
-        
-        self.drop_down_addUser.selected_value = ""
+        """This method is called when an item is selected"""
+        selected_user = self.drop_down_addUser.selected_value
+        print("drop_down_addUser_change", "selected_user", selected_user)
+        if selected_user and selected_user != "":
+            current_items = self.repeating_panel_added_users.items or [] 
+            print("drop_down_addUser_change", current_items)
+            
+            toAdd = {
+                'addedUsers': selected_user,        
+                'remove_users': "Entfernen"
+            }
+            
+            current_items.append(toAdd)
+            
+            self.data_grid_Added_Users.items = current_items
+            
+            self.drop_down_addUser.selected_value = ""
+
+
     
     def data_grid_Added_Users_click(self, row, **event_args):
       if row.get('remove_users') == "Entfernen":
