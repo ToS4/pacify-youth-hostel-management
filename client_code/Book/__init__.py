@@ -65,5 +65,5 @@ class Book(BookTemplate):
       open_form('Home')
     else:
       anvil.server.call('logout')
-      
+    open_form('Home')
 

@@ -11,10 +11,10 @@ class Booking(BookingTemplate):
 
         self.roomNr = properties["roomNr"]
         self.beds = properties["beds"]
-        self.location = properties.get("location", "Unknown") 
+        self.location = properties[]"location", "Unknown") 
         self.priceCategory = properties["priceCategory"]
 
-        self.label_beds.text = f"{self.beds} beds" if self.beds else "N/A"
+        self.label_beds.text = f"{self.beds}" if self.beds else "N/A"
         self.label_location.text = f"{self.location}" if self.location else "N/A"
         self.label_priceCategory.text = self.priceCategory if self.priceCategory else "N/A"
 
@@ -82,20 +82,20 @@ class Booking(BookingTemplate):
         self.update_price()
 
     def button_book_booking_click(self, **event_args):
-        if self.date_picker_startdate.date and self.date_picker_enddate.date and self.total_price > 0:
-            try:
-                anvil.server.call(
-                    'save_booking',
-                    room_nr=self.roomNr,
-                    start_date=self.date_picker_startdate.date,
-                    end_date=self.date_picker_enddate.date,
-                    price=self.total_price,
-                )
-                open_form('Statistics')
-            except Exception as e:
-                alert(f"Fehler beim Speichern der Buchung: {e}")
-        else:
-            alert("Bitte wählen Sie gültige Daten und versuchen Sie es erneut.")
+      if self.date_picker_startdate.date and self.date_picker_enddate.date and self.total_price > 0:
+          try:
+              anvil.server.call(
+                  'save_booking',
+                  room_nr=self.roomNr,
+                  start_date=self.date_picker_startdate.date,
+                  end_date=self.date_picker_enddate.date,
+                  price=self.total_price,
+              )
+              open_form('Statistics')
+          except Exception as e:
+              alert(f"Fehler beim Speichern der Buchung: {e}")
+      else:
+          alert("Bitte wählen Sie gültige Daten und versuchen Sie es erneut.")
 
     def link_home_click(self, **event_args):
         open_form('Home')
@@ -114,31 +114,27 @@ class Booking(BookingTemplate):
         anvil.server.call('logout')
                           
     def update_user_dropdown(self):
-        try:
-            usernames = anvil.server.call('get_all_users')
-            print(f"Users retrieved: {usernames}")
-            self.drop_down_addUser.items = usernames
-            self.drop_down_addUser.selected_value = ""
-        except Exception as e:
-            alert(f"Fehler beim Abrufen der Benutzerdaten: {e}")
+      try:
+          usernames = anvil.server.call('get_all_users', withoutSelf = True)
+          print(f"Users retrieved: {usernames}")
+          self.drop_down_addUser.items = [("", "")] + [(username, username) for username in usernames]
+          self.drop_down_addUser.selected_value = ""
+      except Exception as e:
+          alert(f"Fehler beim Abrufen der Benutzerdaten: {e}")
 
         
     def drop_down_addUser_change(self, **event_args):
-        """This method is called when an item is selected"""
-        selected_user = self.drop_down_addUser.selected_value
-
-        if selected_user and selected_user != "":
-            current_items = self.repeating_panel_added_users.items
-
-            toAdd = {
-                'addedUser': selected_user,        
-            }
-            
-            current_items.append(toAdd)
-            
-            self.data_grid_Added_Users.items = current_items
-            
-            
+      """This method is called when an item is selected"""
+      selected_user = self.drop_down_addUser.selected_value
+      current_items = self.repeating_panel_added_users.items or []
+      
+      if selected_user and selected_user != "":
+          toAdd = {
+              'addedUser': selected_user,        
+          }
+          
+          current_items.append(toAdd)
+          self.data_grid_Added_Users.items = current_items
 
 
     
@@ -153,3 +149,11 @@ class Booking(BookingTemplate):
       if userId:
         anvil.server.call('logout')
       open_form('Home')
+
+    def disable_booked_dates(self):
+      booked_dates = anvil.server.call('get_booked_dates', self.roomNr)
+      disabled_dates = []
+      for start_date, end_date in booked_dates:
+        current_date = start_date
+        
+      
