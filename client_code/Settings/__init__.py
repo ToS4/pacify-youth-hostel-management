@@ -44,4 +44,4 @@ class Settings(SettingsTemplate):
   def file_loader_profile_picture_change(self, file, **event_args):
     """This method is called when a new file is loaded into this FileLoader"""
     print("file_loader_profile_picture_change", file)
-    image_profilepicture
+    self.image_profilepicture = file
