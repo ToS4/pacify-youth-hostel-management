@@ -146,29 +146,29 @@ def get_bookings_by_user(user_id):
 @anvil.server.callable
 def save_booking(room_nr, start_date, end_date, price):
     connection = None
-    try: 
-        connection = sqlite3.connect(db_path) 
+    try:
+        connection = sqlite3.connect(db_path)
         cursor = connection.cursor()
-
+        
+        cursor.execute("SELECT RID FROM Room WHERE RoomNr = ?", (room_nr,))
+        room_id = cursor.fetchone()
+        
+        userId = get_user_id()
+        
+        parameters = (start_date, end_date, price, userId, room_id[0])
         insert_query = """
-        INSERT INTO book (Startdate, Enddate, price, UID, RoomNr)
+        INSERT INTO book (Startdate, Enddate, price, UID, RID)
         VALUES (?, ?, ?, ?, ?)
         """
-
         
-        userId = anvil.server.call('get_user_id')
-        parameters = (room_nr, start_date, end_date, price, userId)
-
         cursor.execute(insert_query, parameters)
-        
         connection.commit()
-        print(insert_query + " | " + parameters)
-        print("Buchung erfolgreich gespeichert.") 
-
+        print("Buchung erfolgreich gespeichert.")
+    
     except sqlite3.Error as e:
         print(f"Fehler beim Speichern der Buchung: {e}")
         raise RuntimeError("Fehler beim Speichern der Buchung.")
-        
+    
     finally:
         if connection:
             connection.close()

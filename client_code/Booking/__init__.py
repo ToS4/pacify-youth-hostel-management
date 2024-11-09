@@ -97,6 +97,7 @@ class Booking(BookingTemplate):
 
 
 
+
     def link_home_click(self, **event_args):
         open_form('Home')
 
