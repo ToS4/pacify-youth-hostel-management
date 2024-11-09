@@ -14,6 +14,8 @@ class Settings(SettingsTemplate):
     if username:
       self.label_welcomer.text = f"Welcome, {username}"
 
+    
+
   def check_login(self):
     userId = anvil.server.call('get_user_id')
     #print(userId)

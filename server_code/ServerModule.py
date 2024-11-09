@@ -293,3 +293,12 @@ def save_profile_pciture(profile_picture_file):
   if userID is None:
     raise RuntimeError("User not logged in")
 
+  connection = sqlite3.connect(db_path)
+  cursor = connection.cursor()
+
+  cursor.execute("UPDATE User SET ProfilePicture = ? WHERE UID = ?", (profile_picture_file, userID))
+
+  connection.commit()
+  connection.close()
+  
+  return True
