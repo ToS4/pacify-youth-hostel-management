@@ -287,19 +287,30 @@ def get_username():
     return None
 
 
-"""@anvil.server.callable
+@anvil.server.callable
 def save_profile_picture(profile_picture_file):
     user_id = get_user_id()
     if user_id:
-        user_row = app_tables.users.get(user_id=user_id)
-        if user_row:
-            user_row['profile_picture'] = profile_picture_file
+        connection = sqlite3.connect(db_path)
+        cursor = connection.cursor()
+
+        profile_picture_blob = profile_picture_file.get_bytes() if profile_picture_file else None
+        cursor.execute("UPDATE User SET profile_picture = ? WHERE UID = ?", (profile_picture_blob, user_id))
+        
+        connection.commit()
+        connection.close()
 
 @anvil.server.callable
 def get_profile_picture():
     user_id = get_user_id()
     if user_id:
-        user_row = app_tables.users.get(user_id=user_id)
-        return user_row['profile_picture'] if user_row else None
+        connection = sqlite3.connect(db_path)
+        cursor = connection.cursor()
+        
+        cursor.execute("SELECT ProfilePicture FROM User WHERE UID = ?", (user_id,))
+        result = cursor.fetchone()
+        
+        connection.close()
+        
+        return anvil.BlobMedia("image/png", result[0]) if result and result[0] else None
     return None
-"""

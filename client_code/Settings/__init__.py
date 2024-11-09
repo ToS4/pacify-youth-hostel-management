@@ -53,6 +53,15 @@ class Settings(SettingsTemplate):
     print("file_loader_profile_picture_change", file)
     self.image_preview_profile_picture.source = file
     self.image_profilepicture.source = file
+    
+    if file:
+      # Check if the file is an image by its MIME type
+      if file.type.startswith('image/'):
+          # Proceed to send the file to the server if it's an image
+          self.save_file(file)
+      else:
+          # Display an error message if it's not an image
+          alert("Please upload an image file!")
 
   def button_save_click(self, **event_args):
     if self.image_profilepicture.source:
