@@ -51,20 +51,22 @@ class Settings(SettingsTemplate):
 
   def file_loader_profile_picture_change(self, file, **event_args):
     print("file_loader_profile_picture_change", file)
-    self.image_preview_profile_picture.source = file
-    self.image_profilepicture.source = file
+    #self.image_profilepicture.source = file
     
     if file:
-      # Check if the file is an image by its MIME type
-      if file.type.startswith('image/'):
-          # Proceed to send the file to the server if it's an image
-          self.save_file(file)
-      else:
-          # Display an error message if it's not an image
-          alert("Please upload an image file!")
+      self.image_preview_profile_picture.source = file
 
+  def handle_response(self, success, msg):
+    self.label_responseMsg.text = ""
+    self.label_responseMsg.foreground = "red"
+    if success:
+      self.label_responseMsg.foreground = "green"
+    self.label_responseMsg.text = msg
+  
   def button_save_click(self, **event_args):
     if self.image_profilepicture.source:
       anvil.server.call('save_profile_picture', self.image_profilepicture.source)
-      
 
+    if self.text_box_NewPassword.text != '' and self.text_box_CurrentPassword.text != '' and self.text_box_ConfirmPassword == self.text_box_NewPassword:
+      result, msg = anvil.server.call('change_password', current=self.text_box_CurrentPassword.text, new=self.text_box_NewPassword)
+      self.handle_response(result, msg)

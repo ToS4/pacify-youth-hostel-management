@@ -33,7 +33,7 @@ components:
   - event_bindings: {pressed_enter: text_box_CurrentPassword_pressed_enter}
     layout_properties: {grid_position: 'NYTTUQ,NHMZEJ'}
     name: text_box_CurrentPassword
-    properties: {}
+    properties: {hide_text: true}
     type: TextBox
   - layout_properties: {grid_position: 'NYTTUQ,RFLLGI'}
     name: spacer_5
@@ -48,8 +48,8 @@ components:
     properties: {text: 'New Password:'}
     type: Label
   - layout_properties: {grid_position: 'AVBQSZ,KRYELV'}
-    name: text_box_NewPassword1
-    properties: {}
+    name: text_box_NewPassword
+    properties: {hide_text: true}
     type: TextBox
   - layout_properties: {grid_position: 'AVBQSZ,UIYYPY'}
     name: spacer_7
@@ -65,7 +65,7 @@ components:
     type: Label
   - layout_properties: {grid_position: 'DERUBM,UEVTCL'}
     name: text_box_ConfirmPassword
-    properties: {}
+    properties: {hide_text: true}
     type: TextBox
   - layout_properties: {grid_position: 'DERUBM,AORMTP'}
     name: spacer_8
@@ -75,6 +75,10 @@ components:
     name: spacer_9
     properties: {height: 32}
     type: Spacer
+  - layout_properties: {grid_position: 'FJZUIX,BWXJYA'}
+    name: label_responseMsg
+    properties: {align: center, bold: true, foreground: red}
+    type: Label
   - event_bindings: {click: button_save_click}
     layout_properties: {grid_position: 'HBHTTN,BKWEDZ'}
     name: button_save
