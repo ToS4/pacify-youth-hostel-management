@@ -97,10 +97,6 @@ components:
   name: label_3
   properties: {text: Booking}
   type: Label
-- layout_properties: {slot: top-left-btn}
-  name: image_1
-  properties: {display_mode: zoom_to_fill, height: 36.79998779296875, source: _/theme/pacify.png}
-  type: Image
 - components:
   - layout_properties: {grid_position: 'JZYZEC,OHELWZ'}
     name: label_2_copy

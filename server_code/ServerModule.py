@@ -159,15 +159,15 @@ def add_username_to_booking(cursor, username, BID):
   if userId:
     UID = userId[0]
     cursor.execute("INSERT INTO bookWith (BID, UID) VALUES (?, ?)", (BID, UID))
-    print(f"User '{username}' linked to booking ID {BID}")
-  else:
-    print(f"Username '{username}' does not exist.")
+    #print(f"User '{username}' linked to booking ID {BID}")
+  #else:
+    #print(f"Username '{username}' does not exist.")
 
 @anvil.server.callable
 def save_booking(RID, room_nr, start_date, end_date, price, addedUsers):
   connection = None
 
-  print(addedUsers)
+  #print(addedUsers)
   
   try:
     connection = sqlite3.connect(db_path)
@@ -188,7 +188,7 @@ def save_booking(RID, room_nr, start_date, end_date, price, addedUsers):
       add_username_to_booking(cursor, username, BID)
   
     connection.commit()
-    print("Buchung erfolgreich gespeichert.")
+    #print("Buchung erfolgreich gespeichert.")
     
   except sqlite3.Error as e:
     print(f"Fehler beim Speichern der Buchung: {e}")

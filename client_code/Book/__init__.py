@@ -10,7 +10,7 @@ class Book(BookTemplate):
     self.init_components(**properties)
 
     data_all_jugendherberge = anvil.server.call('get_all_jugendherberge')
-    print(data_all_jugendherberge)
+    #print(data_all_jugendherberge)
 
     jugendherberge = []
     for row in data_all_jugendherberge:
@@ -28,7 +28,7 @@ class Book(BookTemplate):
   
   def check_login(self):
     userId = anvil.server.call('get_user_id')
-    print(userId)
+    #print(userId)
     if userId is None:
       self.button_login_logout.text = "Login / Register"
       open_form('LoginRegister')
@@ -40,18 +40,18 @@ class Book(BookTemplate):
     selected_value = self.drop_down_location.selected_value
 
     if selected_value is None:
-        print("Kein Wert im Dropdown ausgewählt.")
+        #print("Kein Wert im Dropdown ausgewählt.")
         return
 
     jugendherberge_id = selected_value[0] 
-    print(f"Ausgewählte Jugendherberge ID: {jugendherberge_id}")
+    #print(f"Ausgewählte Jugendherberge ID: {jugendherberge_id}")
 
     try:
         data_rooms_by_jugendherberge = anvil.server.call('get_rooms_by_jugendherberge', jugendherberge_id)
-        print(f"Daten der Räume: {data_rooms_by_jugendherberge}")
+        #print(f"Daten der Räume: {data_rooms_by_jugendherberge}")
 
-        if not data_rooms_by_jugendherberge:
-            print("Keine Räume für diese Jugendherberge gefunden!")
+        #if not data_rooms_by_jugendherberge:
+            #print("Keine Räume für diese Jugendherberge gefunden!")
 
         rooms_by_jugendherberge = []
 
@@ -64,11 +64,11 @@ class Book(BookTemplate):
             }
             rooms_by_jugendherberge.append(toAdd)
 
-        if not rooms_by_jugendherberge:
-            print("Keine Zimmer zum Anzeigen.")
+        #if not rooms_by_jugendherberge:
+            #print("Keine Zimmer zum Anzeigen.")
         
         self.repeating_panel_rooms.items = rooms_by_jugendherberge
-        print(f"Zimmer angezeigt: {rooms_by_jugendherberge}")
+        #print(f"Zimmer angezeigt: {rooms_by_jugendherberge}")
 
     except Exception as e:
         print(f"Fehler beim Abrufen der Räume: {e}")
@@ -91,7 +91,7 @@ class Book(BookTemplate):
     open_form('Home')
 
   def drop_down_location_change(self, **event_args):
-    print(f"Dropdown geändert: {self.drop_down_location.selected_value}")
+    #print(f"Dropdown geändert: {self.drop_down_location.selected_value}")
     self.update_rooms()
     
 

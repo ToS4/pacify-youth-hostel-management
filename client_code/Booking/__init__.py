@@ -10,7 +10,7 @@ class Booking(BookingTemplate):
         self.init_components(**properties)
 
         self.RID = properties["RID"]
-        print(f"RID: {self.RID}") 
+        #print(f"RID: {self.RID}") 
         self.roomNr = properties["roomNr"]
         self.beds = properties["beds"]
         self.location = properties.get("location","Unkown") 
@@ -39,7 +39,7 @@ class Booking(BookingTemplate):
 
     def check_login(self):
       userId = anvil.server.call('get_user_id')
-      print(userId)
+      #print(userId)
       if userId is None:
         self.button_login_logout.text = "Login / Register"
         open_form('LoginRegister')
@@ -47,10 +47,10 @@ class Booking(BookingTemplate):
         self.button_login_logout.text = "Logout"
 
     def update_price(self):
-      print(f"Start date: {self.date_picker_startdate.date}, End date: {self.date_picker_enddate.date}")
+      #print(f"Start date: {self.date_picker_startdate.date}, End date: {self.date_picker_enddate.date}")
       if self.date_picker_startdate.date and self.date_picker_enddate.date:
         delta = (self.date_picker_enddate.date - self.date_picker_startdate.date).days
-        print(f"Delta: {delta}") 
+        #print(f"Delta: {delta}") 
         if delta > 0:
           self.total_price = self.price_per_night * delta
         else:
@@ -61,16 +61,16 @@ class Booking(BookingTemplate):
       self.label_price.text = f"Total Price: ${self.total_price}"
 
     def date_picker_startdate_change(self, **event_args):
-      print("Start date changed")  
+      #print("Start date changed")  
       self.update_price()
     
       self.date_picker_enddate.min_date = self.date_picker_startdate.date + datetime.timedelta(days=1)
 
     def date_picker_enddate_change(self, **event_args):
-      print("End date changed") 
+      #print("End date changed") 
       if self.date_picker_enddate.date <= self.date_picker_startdate.date:
         self.date_picker_enddate.date = self.date_picker_startdate.date + datetime.timedelta(days=1)
-        print("End date adjusted to be one day after start date")  
+        #print("End date adjusted to be one day after start date")  
       self.update_price()
 
     def button_book_booking_click(self, **event_args):
@@ -132,8 +132,8 @@ Bitte wählen Sie andere Daten.""")
     def update_user_dropdown(self):
       try:
         usernames = anvil.server.call('get_all_users', withoutSelf = True)
-        print(f"Users retrieved: {usernames}")
-        print(self.drop_down_addUser.items)
+        #print(f"Users retrieved: {usernames}")
+        #print(self.drop_down_addUser.items)
         self.drop_down_addUser.items = [("", "")] + [(username, username) for username in usernames]
         self.drop_down_addUser.selected_value = ""
       except Exception as e:
@@ -157,7 +157,7 @@ Bitte wählen Sie andere Daten.""")
         }
         
         added_users.append(toAdd)
-        print(self.drop_down_addUser.items)
+        #print(self.drop_down_addUser.items)
 
         for index, item in enumerate(dropdown_users):
           if item[0] == selected_user:
@@ -179,4 +179,3 @@ Bitte wählen Sie andere Daten.""")
       if userId:
         anvil.server.call('logout')
       open_form('Home')
-

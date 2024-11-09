@@ -9,13 +9,13 @@ class Statistics(StatisticsTemplate):
         self.check_login()
       
         bookings = anvil.server.call('get_bookings_by_user')
-        print("statistics", bookings)
+        #print("statistics", bookings)
 
         self.update_bookings(bookings)
 
     def check_login(self):
       userId = anvil.server.call('get_user_id')
-      print(userId)
+      #print(userId)
       if userId is None:
         self.button_login_logout.text = "Login / Register"
         open_form('LoginRegister')
