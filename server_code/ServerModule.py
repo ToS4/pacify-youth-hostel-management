@@ -265,3 +265,31 @@ def get_unavailable_dates(RID, start_date, end_date):
     connection.close()
 
     return unavailable_dates
+
+
+@anvil.server.callable
+def get_username():
+  userId = get_user_id()
+  if userId is None:
+    return None
+
+  connection = sqlite3.connect(db_path)
+  cursor = connection.cursor()
+
+  cursor.execute("SELECT Username FROM User WHERE UID = ?", (userId,))
+  result = cursor.fetchone()
+  
+  connection.close()
+  
+  if result:
+    return result[0]
+  else:
+    return None
+
+
+@anvil.server.callable
+def save_profile_pciture(profile_picture_file):
+  userID = get_user_id()
+  if userID is None:
+    raise RuntimeError("User not logged in")
+

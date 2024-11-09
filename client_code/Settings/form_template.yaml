@@ -10,12 +10,13 @@ components:
     type: Spacer
   - layout_properties: {grid_position: 'TIFTMA,RVZUMA SGJFEQ,WNVXVF'}
     name: image_preview_profile_picture
-    properties: {source: _/theme/user.png}
+    properties: {alt_text: Profile Picture, display_mode: shrink_to_fit, source: _/theme/user.png}
     type: Image
-  - event_bindings: {change: file_loader_profile_picture_change}
+  - data_bindings: []
+    event_bindings: {change: file_loader_profile_picture_change}
     layout_properties: {grid_position: 'TIFTMA,RVZUMA LJVQFO,PNMKIS'}
     name: file_loader_profile_picture
-    properties: {align: center}
+    properties: {align: center, file_types: '"JPEG", "PNG", "GIF", "SVG", "WEBP"', show_state: false}
     type: FileLoader
   - layout_properties: {grid_position: 'TIFTMA,DBTPKY'}
     name: spacer_1
