@@ -16,7 +16,8 @@ components:
       - {data_key: countBeds, expand: false, id: VJQQOR, title: Beds, width: 111}
       - {data_key: priceCategory, expand: false, id: OJLQEN, title: Price Category, width: 129.20001220703125}
       - {data_key: location, expand: false, id: IZQPGA, title: Location, width: 110.79998779296875}
-      - {data_key: timestamp, expand: false, id: DWSEEU, title: Timestamp, width: 333}
+      - {data_key: startdate, expand: false, id: DWSEEU, title: startdate, width: 130.7777099609375}
+      - {data_key: enddate, id: LIGJBH, title: enddate}
       - {data_key: price, expand: false, id: ECJKCA, title: Price, width: 153}
     type: DataGrid
   layout_properties: {slot: default}

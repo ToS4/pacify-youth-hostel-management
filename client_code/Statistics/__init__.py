@@ -11,7 +11,7 @@ class Statistics(StatisticsTemplate):
         bookings = anvil.server.call('get_bookings_by_user')
         print("statistics", bookings)
 
-        self.data_grid_bookings.items = self.prepare_data_for_grid(bookings)    
+        self.update_bookings(bookings)
 
     def check_login(self):
       userId = anvil.server.call('get_user_id')
@@ -22,33 +22,35 @@ class Statistics(StatisticsTemplate):
       else:
         self.button_login_logout.text = "Logout"
 
-    def prepare_data_for_grid(self, bookings):
-        prepared_data = []
-        for booking in bookings:
-            prepared_data.append({
-                'roomNr': booking[0],               
-                'countBeds': booking[1],          
-                'priceCategory': booking[2],          
-                'location': booking[3],                
-                'startdate': booking[4],             
-                'enddate': booking[5],                
-                'price': booking[6]                   
-            })
-        print(f"Prepared data for grid: {prepared_data}") # für debug
-        return prepared_data
-
-    def link_home_click(self, **event_args):
-        open_form('Home')
-
-    def link_book_click(self, **event_args):
-        open_form('Book')
-
-    def link_statistics_click(self, **event_args):
-        open_form('Statistics')
-
-    def button_login_logout_click(self, **event_args):
-      userId = anvil.server.call('get_user_id')
-      if userId is None:
-        open_form('LoginRegister')
-      else:
-        anvil.server.call('logout')
+    def update_bookings(self, bookings):
+      prepared_bookings = []
+      for booking in bookings:
+          toAdd = {
+              'roomNr': booking[0],
+              'startdate': booking[1],             
+              'enddate': booking[2],                
+              'countBeds': booking[3], 
+              'priceCategory': booking[4],
+              'location': booking[5],                
+              'price': booking[6]   
+          }
+          prepared_bookings.append(toAdd)
+      
+      self.data_grid_bookings.items = prepared_bookings
+      #print(prepared_bookings)
+      
+      def link_home_click(self, **event_args):
+          open_form('Home')
+  
+      def link_book_click(self, **event_args):
+          open_form('Book')
+  
+      def link_statistics_click(self, **event_args):
+          open_form('Statistics')
+  
+      def button_login_logout_click(self, **event_args):
+        userId = anvil.server.call('get_user_id')
+        if userId is None:
+          open_form('LoginRegister')
+        else:
+          anvil.server.call('logout')

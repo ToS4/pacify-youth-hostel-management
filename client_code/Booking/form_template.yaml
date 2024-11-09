@@ -42,6 +42,28 @@ components:
     name: date_picker_enddate
     properties: {}
     type: DatePicker
+  - layout_properties: {grid_position: 'NMQUAX,GYWNED'}
+    name: label_2_copy_2
+    properties: {bold: true, icon: 'fa:group', text: Add User}
+    type: Label
+  - event_bindings: {change: drop_down_addUser_change}
+    layout_properties: {grid_position: 'WYTTTR,YZHGHY'}
+    name: drop_down_addUser
+    properties: {}
+    type: DropDown
+  - components:
+    - name: repeating_panel_1
+      properties: {item_template: Booking.RowTemplate3}
+      type: RepeatingPanel
+    data_bindings:
+    - {code: 'self.item['''']', property: tag, writeback: false}
+    layout_properties: {grid_position: 'WRRCYG,LLFRHE'}
+    name: data_grid_Added_Users
+    properties:
+      columns:
+      - {data_key: addedUsers, expand: false, id: JKSDUP, title: Added Users, width: 776.111083984375}
+      - {data_key: remove_users, id: OJLQEN, title: Remove}
+    type: DataGrid
   - layout_properties: {grid_position: 'DBYJZM,RLGRIM'}
     name: spacer_1
     properties: {height: 32}

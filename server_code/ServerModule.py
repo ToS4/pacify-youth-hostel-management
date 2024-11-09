@@ -4,7 +4,7 @@ from anvil.tables import app_tables
 import anvil.files
 from anvil.files import data_files
 import anvil.server
-import sqlite3
+import sqlite3, re
 from passlib.hash import sha256_crypt
 
 # This is a server module. It runs on the Anvil server,
@@ -32,7 +32,7 @@ def login(username, password):
   connection = sqlite3.connect(db_path)
   cursor = connection.cursor()
 
-  cursor.execute("SELECT * FROM User WHERE Username = ?", (username,))
+  cursor.execute("SELECT Username FROM User WHERE Username = ?", (username,))
   user = cursor.fetchone()
   
   if user is not None:
@@ -51,12 +51,19 @@ def login(username, password):
 
 @anvil.server.callable
 def register(username, password):
+
+  if len(username) > 50:
+    return False, "Username is too long"
+
+  if not re.match("^[A-Za-z0-9_]+$", username):
+    return False, "Username can only contain letters, numbers, and underscores, with no spaces."
+  
   password = hash_password(password)
   
   connection = sqlite3.connect(db_path)
   cursor = connection.cursor()
 
-  cursor.execute("SELECT * FROM User WHERE Username = ?", (username,))
+  cursor.execute("SELECT Username FROM User WHERE Username = ?", (username,))
   user = cursor.fetchone()
   
   if user is None:
@@ -135,9 +142,11 @@ def get_bookings_by_user():
         PriceCategory ON Room.PID = PriceCategory.PID
     JOIN 
         Jugendherberge ON Room.JID = Jugendherberge.JID
+    LEFT JOIN 
+        bookWith ON book.BID = bookWith.BID
     WHERE
-        book.UID = ?;  
-    """, (userId,))
+        book.UID = ? OR bookWith.UID = ?;
+    """, (userId, userId))
   
     bookings = cursor.fetchall()
     connection.close()
@@ -172,3 +181,14 @@ def save_booking(room_nr, start_date, end_date, price):
     finally:
         if connection:
             connection.close()
+
+@anvil.server.callable
+def get_all_users():
+    connection = sqlite3.connect(db_path)
+    cursor = connection.cursor()
+        
+    cursor.execute("SELECT Username FROM User")
+    users = cursor.fetchall()
+    
+    connection.close()
+    return [user[0] for user in users]

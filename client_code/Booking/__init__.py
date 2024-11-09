@@ -28,6 +28,8 @@ class Booking(BookingTemplate):
         self.price_per_night = self.get_price_per_night()
         self.total_price = self.price_per_night
         self.label_price.text = f"Total Price: ${self.total_price}"
+
+        self.update_user_dropdown() 
         self.check_login()
 
     def check_login(self):
@@ -95,9 +97,6 @@ class Booking(BookingTemplate):
         else:
             alert("Bitte wählen Sie gültige Daten und versuchen Sie es erneut.")
 
-
-
-
     def link_home_click(self, **event_args):
         open_form('Home')
 
@@ -113,3 +112,33 @@ class Booking(BookingTemplate):
         open_form('LoginRegister')
       else:
         anvil.server.call('logout')
+                          
+    def update_user_dropdown(self):
+      try:
+        usernames = anvil.server.call('get_all_users')
+        print(f"Users retrieved: {usernames}")
+        self.drop_down_addUser.items = [("", "Bitte wählen...")] + [(username, username) for username in usernames]
+        self.drop_down_addUser.selected_value = ""
+      except Exception as e:
+        alert(f"Fehler beim Abrufen der Benutzerdaten: {e}")
+    
+    def drop_down_addUser_change(self, **event_args):
+      selected_user = self.drop_down_addUser.selected_value
+      
+      if selected_user and selected_user != "":
+        current_items = self.data_grid_Added_Users.items
+        
+        toAdd = {
+            'addedUsers': selected_user,        
+            'remove_users': "Entfernen"
+        }
+        
+        current_items.append(toAdd)
+        self.data_grid_Added_Users.items = current_items
+        self.drop_down_addUser.selected_value = ""
+    
+    def data_grid_Added_Users_click(self, row, **event_args):
+      if row.get('remove_users') == "Entfernen":
+        current_items = self.data_grid_Added_Users.items
+        current_items.remove(row)
+        self.data_grid_Added_Users.items = current_items
