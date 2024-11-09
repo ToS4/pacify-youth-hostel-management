@@ -32,11 +32,11 @@ def login(username, password):
   connection = sqlite3.connect(db_path)
   cursor = connection.cursor()
 
-  cursor.execute("SELECT Username FROM User WHERE Username = ?", (username,))
+  cursor.execute("SELECT UID, Username, Password  FROM User WHERE Username = ?", (username,))
   user = cursor.fetchone()
   
   if user is not None:
-    if verify_password(password, user[3]):
+    if verify_password(password, user[2]):
       userId = anvil.server.session.get("userId", None)
       userId = user[0]
     

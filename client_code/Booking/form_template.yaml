@@ -52,11 +52,10 @@ components:
     properties: {}
     type: DropDown
   - components:
-    - name: repeating_panel_1
+    - name: repeating_panel_added_users
       properties: {item_template: Booking.RowTemplate3}
       type: RepeatingPanel
-    data_bindings:
-    - {code: 'self.item['''']', property: tag, writeback: false}
+    data_bindings: []
     layout_properties: {grid_position: 'WRRCYG,LLFRHE'}
     name: data_grid_Added_Users
     properties:

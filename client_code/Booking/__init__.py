@@ -124,9 +124,10 @@ class Booking(BookingTemplate):
     
     def drop_down_addUser_change(self, **event_args):
       selected_user = self.drop_down_addUser.selected_value
-      
+      print("drop_down_addUser_change", "selected_user", selected_user)
       if selected_user and selected_user != "":
-        current_items = self.data_grid_Added_Users.items
+        current_items = self.repeating_panel_added_users.items
+        print("drop_down_addUser_change", current_items)
         
         toAdd = {
             'addedUsers': selected_user,        
@@ -134,7 +135,9 @@ class Booking(BookingTemplate):
         }
         
         current_items.append(toAdd)
+        
         self.data_grid_Added_Users.items = current_items
+        
         self.drop_down_addUser.selected_value = ""
     
     def data_grid_Added_Users_click(self, row, **event_args):
