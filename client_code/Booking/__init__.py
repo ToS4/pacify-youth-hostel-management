@@ -126,11 +126,10 @@ class Booking(BookingTemplate):
     def drop_down_addUser_change(self, **event_args):
         """This method is called when an item is selected"""
         selected_user = self.drop_down_addUser.selected_value
-        print("drop_down_addUser_change", "selected_user", selected_user)
+
         if selected_user and selected_user != "":
-            current_items = self.repeating_panel_added_users.items or [] 
-            print("drop_down_addUser_change", current_items)
-            
+            current_items = self.repeating_panel_added_users.items
+
             toAdd = {
                 'addedUser': selected_user,        
             }
@@ -139,7 +138,7 @@ class Booking(BookingTemplate):
             
             self.data_grid_Added_Users.items = current_items
             
-            self.drop_down_addUser.selected_value = ""
+            
 
 
     
