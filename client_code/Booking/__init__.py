@@ -9,9 +9,12 @@ class Booking(BookingTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)
 
+
+        self.RID = properties["RID"]
+        print(f"RID: {self.RID}") 
         self.roomNr = properties["roomNr"]
         self.beds = properties["beds"]
-        self.location = properties[]"location", "Unknown") 
+        self.location = properties.get("location","Unkown") 
         self.priceCategory = properties["priceCategory"]
 
         self.label_beds.text = f"{self.beds}" if self.beds else "N/A"
@@ -29,6 +32,7 @@ class Booking(BookingTemplate):
         self.total_price = self.price_per_night
         self.label_price.text = f"Total Price: ${self.total_price}"
 
+        self.disable_booked_dates() 
         self.update_user_dropdown() 
         self.check_login()
 
@@ -117,6 +121,7 @@ class Booking(BookingTemplate):
       try:
           usernames = anvil.server.call('get_all_users', withoutSelf = True)
           print(f"Users retrieved: {usernames}")
+          print(self.drop_down_addUser.items)
           self.drop_down_addUser.items = [("", "")] + [(username, username) for username in usernames]
           self.drop_down_addUser.selected_value = ""
       except Exception as e:
@@ -126,7 +131,10 @@ class Booking(BookingTemplate):
     def drop_down_addUser_change(self, **event_args):
       """This method is called when an item is selected"""
       selected_user = self.drop_down_addUser.selected_value
-      current_items = self.repeating_panel_added_users.items or []
+      print(self.repeating_panel_added_users.items)
+      current_items = []
+      print("selected_user", selected_user)
+      print("current_items", current_items)
       
       if selected_user and selected_user != "":
           toAdd = {
@@ -151,9 +159,13 @@ class Booking(BookingTemplate):
       open_form('Home')
 
     def disable_booked_dates(self):
-      booked_dates = anvil.server.call('get_booked_dates', self.roomNr)
+      booked_dates = anvil.server.call('get_booked_dates', self.RID)
+  
       disabled_dates = []
-      for start_date, end_date in booked_dates:
-        current_date = start_date
+  
+      for booked_date in booked_dates:
+          disabled_dates.append(booked_date)
+  
+      self.date_picker_startdate.disabled_dates = disabled_dates
+      self.date_picker_enddate.disabled_dates = disabled_dates
         
-      

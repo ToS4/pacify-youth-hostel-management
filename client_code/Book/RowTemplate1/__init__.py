@@ -23,6 +23,7 @@ class RowTemplate1(RowTemplate1Template):
     
     open_form(
         'Booking',
+        RID = self.item['RID'],
         roomNr=self.item['roomNr'],
         beds=self.item['countBeds'],
         priceCategory=self.item['priceCategory'],

@@ -44,7 +44,8 @@ class Book(BookTemplate):
           toAdd = {
               'roomNr': row[0],        
               'countBeds': row[1],
-              'priceCategory': row[2]
+              'priceCategory': row[2],
+              'RID': row[3]
           }
           rooms_by_jugendherberge.append(toAdd)
   

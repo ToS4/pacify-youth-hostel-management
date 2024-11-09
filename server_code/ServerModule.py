@@ -6,6 +6,7 @@ from anvil.files import data_files
 import anvil.server
 import sqlite3, re
 from passlib.hash import sha256_crypt
+import datetime
 
 # This is a server module. It runs on the Anvil server,
 # rather than in the user's browser.
@@ -104,7 +105,7 @@ def get_rooms_by_jugendherberge(jugendherberge_id):
     cursor = connection.cursor()
 
     cursor.execute("""
-        SELECT Room.RoomNr, Room.Beds, PriceCategory.Name AS PriceCategoryName
+        SELECT Room.RoomNr, Room.Beds, PriceCategory.Name AS PriceCategoryName, Room.RID
         FROM Room
         JOIN PriceCategory ON Room.PID = PriceCategory.PID
         WHERE Room.JID = ?;
@@ -199,27 +200,30 @@ def get_all_users(withoutSelf = False):
   return [user[0] for user in users]
 
 
+@anvil.server.callable
 def get_booked_dates(room_id):
-    connection = sqlite3.connect(db_path)
+    connection = sqlite3.connect(db_path)  
     cursor = connection.cursor()
-    
-    try:
-        query = """
-        SELECT Startdate, Enddate 
-        FROM book 
-        WHERE RID = ?
-        """
-        cursor.execute(query, (room_id,))
-        
-        results = cursor.fetchall()
-        
-        cursor.close()
-        connection.close()
-        
-        booked_dates = [(row[0], row[1]) for row in results]
-        return booked_dates
 
-    except Exception as e:
-        cursor.close()
-        connection.close()
-        raise Exception(f"Fehler beim Abrufen der Buchungsdaten: {e}")
+    cursor.execute("""
+        SELECT Startdate, Enddate
+        FROM book
+        WHERE RID = ?
+    """, (room_id,))
+
+    bookings = cursor.fetchall()
+
+    booked_dates = []
+
+    for booking in bookings:
+        start_date = datetime.datetime.strptime(booking[0], "%Y-%m-%d").date()  
+        end_date = datetime.datetime.strptime(booking[1], "%Y-%m-%d").date()
+
+        current_date = start_date
+        while current_date <= end_date:
+            booked_dates.append(current_date)
+            current_date += datetime.timedelta(days=1)
+
+    connection.close()
+
+    return booked_dates
