@@ -60,7 +60,7 @@ components:
     name: data_grid_Added_Users
     properties:
       columns:
-      - {data_key: addedUsers, expand: false, id: JKSDUP, title: Added Users, width: 776.111083984375}
+      - {data_key: addedUser, expand: false, id: JKSDUP, title: Added Users, width: 776.111083984375}
       - {data_key: remove_users, id: OJLQEN, title: Remove}
     type: DataGrid
   - layout_properties: {grid_position: 'DBYJZM,RLGRIM'}

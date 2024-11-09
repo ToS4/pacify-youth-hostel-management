@@ -117,7 +117,7 @@ class Booking(BookingTemplate):
         try:
             usernames = anvil.server.call('get_all_users')
             print(f"Users retrieved: {usernames}")
-            self.drop_down_addUser.items = [("", "Bitte wählen...")] + [(username, username) for username in usernames]
+            self.drop_down_addUser.items = usernames
             self.drop_down_addUser.selected_value = ""
         except Exception as e:
             alert(f"Fehler beim Abrufen der Benutzerdaten: {e}")
@@ -132,8 +132,7 @@ class Booking(BookingTemplate):
             print("drop_down_addUser_change", current_items)
             
             toAdd = {
-                'addedUsers': selected_user,        
-                'remove_users': "Entfernen"
+                'addedUser': selected_user,        
             }
             
             current_items.append(toAdd)
