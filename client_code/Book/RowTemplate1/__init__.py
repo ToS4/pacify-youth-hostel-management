@@ -26,6 +26,6 @@ class RowTemplate1(RowTemplate1Template):
         RID = self.item['RID'],
         roomNr=self.item['roomNr'],
         beds=self.item['countBeds'],
-        priceCategory=self.item['priceCategory'],
+        priceCategory=self.item['priceCategory'], 
         location=city_name 
     )

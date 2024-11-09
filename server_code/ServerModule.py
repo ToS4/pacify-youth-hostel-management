@@ -246,3 +246,20 @@ def get_booked_dates(room_id):
     connection.close()
 
     return booked_dates
+
+def get_price_per_night(self):
+    connection = sqlite3.connect(db_path)
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT CostPerNight FROM PriceCategory WHERE Name = ?", (self.priceCategory,))
+    row = cursor.fetchone()
+
+    if row:
+        base_price = row[0]
+    else:
+        raise ValueError("Unbekannte Preiskategorie")
+
+    connection.close()
+
+    price = base_price + (self.beds * 10)
+    return price

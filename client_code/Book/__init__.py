@@ -48,7 +48,6 @@ class Book(BookTemplate):
               'RID': row[3]
           }
           rooms_by_jugendherberge.append(toAdd)
-  
       self.repeating_panel_rooms.items = rooms_by_jugendherberge
 
   def link_home_click(self, **event_args):

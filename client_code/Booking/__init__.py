@@ -9,9 +9,8 @@ class Booking(BookingTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)
 
-
-        self.RID = properties["RID"]
-        print(f"RID: {self.RID}") 
+        #self.RID = properties["RID"]
+        #print(f"RID: {self.RID}") 
         self.roomNr = properties["roomNr"]
         self.beds = properties["beds"]
         self.location = properties.get("location","Unkown") 
@@ -34,7 +33,7 @@ class Booking(BookingTemplate):
 
         self.repeating_panel_added_users.items = []
       
-        self.disable_booked_dates() 
+        #self.disable_booked_dates() 
         self.update_user_dropdown() 
         self.check_login()
 
@@ -178,7 +177,7 @@ class Booking(BookingTemplate):
         anvil.server.call('logout')
       open_form('Home')
 
-    def disable_booked_dates(self):
+"""    def disable_booked_dates(self):
       booked_dates = anvil.server.call('get_booked_dates', self.RID)
   
       disabled_dates = []
@@ -188,4 +187,4 @@ class Booking(BookingTemplate):
   
       self.date_picker_startdate.disabled_dates = disabled_dates
       self.date_picker_enddate.disabled_dates = disabled_dates
-        
+        """
