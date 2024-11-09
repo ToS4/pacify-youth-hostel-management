@@ -7,7 +7,6 @@ import anvil.server
 
 class Book(BookTemplate):
   def __init__(self, **properties):
-    # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
     data_all_jugendherberge = anvil.server.call('get_all_jugendherberge')
@@ -15,13 +14,18 @@ class Book(BookTemplate):
 
     jugendherberge = []
     for row in data_all_jugendherberge:
-        jugendherberge.append((row[2], row))
-    
-    self.drop_down_location.items = jugendherberge
+        jugendherberge.append((row[2], row))  
+
+    self.drop_down_location.items = jugendherberge  
+    self.drop_down_location.selected_value = None  
+
 
     self.update_rooms()
+
     self.check_login()
 
+
+  
   def check_login(self):
     userId = anvil.server.call('get_user_id')
     print(userId)
@@ -31,24 +35,46 @@ class Book(BookTemplate):
     else:
       self.button_login_logout.text = "Logout"
   
-  
+
   def update_rooms(self):
-      selected_value = self.drop_down_location.selected_value
-      print(selected_value)
-  
-      data_rooms_by_jugendherberge = anvil.server.call('get_rooms_by_jugendherberge', selected_value[0])
-      print(data_rooms_by_jugendherberge)
-      
-      rooms_by_jugendherberge = []
-      for row in data_rooms_by_jugendherberge:
-          toAdd = {
-              'roomNr': row[0],        
-              'countBeds': row[1],
-              'priceCategory': row[2],
-              'RID': row[3]
-          }
-          rooms_by_jugendherberge.append(toAdd)
-      self.repeating_panel_rooms.items = rooms_by_jugendherberge
+    selected_value = self.drop_down_location.selected_value
+
+    if selected_value is None:
+        print("Kein Wert im Dropdown ausgewählt.")
+        return
+
+    jugendherberge_id = selected_value[0] 
+    print(f"Ausgewählte Jugendherberge ID: {jugendherberge_id}")
+
+    try:
+        data_rooms_by_jugendherberge = anvil.server.call('get_rooms_by_jugendherberge', jugendherberge_id)
+        print(f"Daten der Räume: {data_rooms_by_jugendherberge}")
+
+        if not data_rooms_by_jugendherberge:
+            print("Keine Räume für diese Jugendherberge gefunden!")
+
+        rooms_by_jugendherberge = []
+
+        for row in data_rooms_by_jugendherberge:
+            toAdd = {
+                'roomNr': row[0],
+                'countBeds': row[1],
+                'priceCategory': row[2],
+                'RID': row[3]
+            }
+            rooms_by_jugendherberge.append(toAdd)
+
+        if not rooms_by_jugendherberge:
+            print("Keine Zimmer zum Anzeigen.")
+        
+        self.repeating_panel_rooms.items = rooms_by_jugendherberge
+        print(f"Zimmer angezeigt: {rooms_by_jugendherberge}")
+
+    except Exception as e:
+        print(f"Fehler beim Abrufen der Räume: {e}")
+
+
+
 
   def link_home_click(self, **event_args):
     open_form('Home')
@@ -66,4 +92,9 @@ class Book(BookTemplate):
     else:
       anvil.server.call('logout')
     open_form('Home')
+
+  def drop_down_location_change(self, **event_args):
+    print(f"Dropdown geändert: {self.drop_down_location.selected_value}")
+    self.update_rooms()
+    
 

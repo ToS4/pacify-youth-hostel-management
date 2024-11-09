@@ -101,22 +101,21 @@ def get_all_jugendherberge():
 
 @anvil.server.callable
 def get_rooms_by_jugendherberge(jugendherberge_id):
-    connection = sqlite3.connect(db_path)
-    cursor = connection.cursor()
+  connection = sqlite3.connect(db_path)
+  cursor = connection.cursor()
 
-    cursor.execute("""
-        SELECT Room.RoomNr, Room.Beds, PriceCategory.Name AS PriceCategoryName, Room.RID
-        FROM Room
-        JOIN PriceCategory ON Room.PID = PriceCategory.PID
-        WHERE Room.JID = ?;
-    """, (jugendherberge_id,))
+  cursor.execute("""
+      SELECT Room.RoomNr, Room.Beds, PriceCategory.Name AS PriceCategoryName, Room.RID
+      FROM Room
+      JOIN PriceCategory ON Room.PID = PriceCategory.PID
+      WHERE Room.JID = ?;
+  """, (jugendherberge_id,))
   
-    rooms = cursor.fetchall()
+  rooms = cursor.fetchall()
 
-    # Close the connection
-    connection.close()
+  connection.close()
   
-    return rooms
+  return rooms
     
 
 @anvil.server.callable

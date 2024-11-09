@@ -9,8 +9,8 @@ class Booking(BookingTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)
 
-        #self.RID = properties["RID"]
-        #print(f"RID: {self.RID}") 
+        self.RID = properties["RID"]
+        print(f"RID: {self.RID}") 
         self.roomNr = properties["roomNr"]
         self.beds = properties["beds"]
         self.location = properties.get("location","Unkown") 
