@@ -17,7 +17,7 @@ class Book(BookTemplate):
         jugendherberge.append((row[2], row))  
 
     self.drop_down_location.items = jugendherberge  
-    self.drop_down_location.selected_value = None  
+    #self.drop_down_location.selected_value = None  
 
 
     self.update_rooms()

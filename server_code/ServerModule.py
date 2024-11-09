@@ -215,47 +215,53 @@ def get_all_users(withoutSelf = False):
   return [user[0] for user in users]
 
 
+
 @anvil.server.callable
-def get_booked_dates(room_id):
-    connection = sqlite3.connect(db_path)  
-    cursor = connection.cursor()
+def get_price_per_night(priceCategory, beds):
+  connection = sqlite3.connect(db_path)
+  cursor = connection.cursor()
 
-    cursor.execute("""
-        SELECT Startdate, Enddate
-        FROM book
-        WHERE RID = ?
-    """, (room_id,))
+  cursor.execute("SELECT CostPerNight FROM PriceCategory WHERE Name = ?", (priceCategory,))
+  row = cursor.fetchone()
 
-    bookings = cursor.fetchall()
+  if row:
+    base_price = row[0]
 
-    booked_dates = []
+  connection.close()
 
-    for booking in bookings:
-        start_date = datetime.datetime.strptime(booking[0], "%Y-%m-%d").date()  
-        end_date = datetime.datetime.strptime(booking[1], "%Y-%m-%d").date()
+  price = base_price + (beds * 10)
+  return price
 
-        current_date = start_date
-        while current_date <= end_date:
-            booked_dates.append(current_date)
-            current_date += datetime.timedelta(days=1)
 
-    connection.close()
-
-    return booked_dates
-
-def get_price_per_night(self):
+@anvil.server.callable
+def is_room_available(RID, start_date, end_date):
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
 
-    cursor.execute("SELECT CostPerNight FROM PriceCategory WHERE Name = ?", (self.priceCategory,))
-    row = cursor.fetchone()
+    cursor.execute("""
+        SELECT 1 FROM book
+        WHERE RID = ?
+        AND NOT (Enddate < ? OR Startdate > ?)
+    """, (RID, start_date, end_date))
 
-    if row:
-        base_price = row[0]
-    else:
-        raise ValueError("Unbekannte Preiskategorie")
+    available = cursor.fetchone() is None
+
+    connection.close()
+    return available
+
+@anvil.server.callable
+def get_unavailable_dates(RID, start_date, end_date):
+    connection = sqlite3.connect(db_path)
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT Startdate, Enddate FROM book
+        WHERE RID = ?
+        AND NOT (Enddate < ? OR Startdate > ?)
+    """, (RID, start_date, end_date))
+
+    unavailable_dates = cursor.fetchall()
 
     connection.close()
 
-    price = base_price + (self.beds * 10)
-    return price
+    return unavailable_dates

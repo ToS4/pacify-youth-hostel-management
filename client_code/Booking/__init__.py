@@ -27,7 +27,7 @@ class Booking(BookingTemplate):
         self.date_picker_enddate.date = None
         self.date_picker_enddate.min_date = today + datetime.timedelta(days=1)
         
-        self.price_per_night = self.get_price_per_night()
+        self.price_per_night = anvil.server.call('get_price_per_night', self.priceCategory, self.beds)
         self.total_price = self.price_per_night
         self.label_price.text = f"Total Price: ${self.total_price}"
 
@@ -46,78 +46,81 @@ class Booking(BookingTemplate):
       else:
         self.button_login_logout.text = "Logout"
 
-    def get_price_per_night(self):
-        if self.priceCategory == "Standard":
-            base_price = 80
-        elif self.priceCategory == "Premium":
-            base_price = 150
-        elif self.priceCategory == "Deluxe":
-            base_price = 300
-        else:
-            raise ValueError("Unbekannte Preiskategorie")
-        
-        price = base_price + (self.beds * 10)
-        return price
-
     def update_price(self):
-        print(f"Start date: {self.date_picker_startdate.date}, End date: {self.date_picker_enddate.date}")
-        if self.date_picker_startdate.date and self.date_picker_enddate.date:
-            delta = (self.date_picker_enddate.date - self.date_picker_startdate.date).days
-            print(f"Delta: {delta}") 
-            if delta > 0:
-                self.total_price = self.price_per_night * delta
-            else:
-                self.total_price = self.price_per_night
+      print(f"Start date: {self.date_picker_startdate.date}, End date: {self.date_picker_enddate.date}")
+      if self.date_picker_startdate.date and self.date_picker_enddate.date:
+        delta = (self.date_picker_enddate.date - self.date_picker_startdate.date).days
+        print(f"Delta: {delta}") 
+        if delta > 0:
+          self.total_price = self.price_per_night * delta
         else:
-            self.total_price = self.price_per_night
+          self.total_price = self.price_per_night
+      else:
+        self.total_price = self.price_per_night
 
-        self.label_price.text = f"Total Price: ${self.total_price}"
+      self.label_price.text = f"Total Price: ${self.total_price}"
 
     def date_picker_startdate_change(self, **event_args):
-        print("Start date changed")  
-        self.update_price()
-     
-        self.date_picker_enddate.min_date = self.date_picker_startdate.date + datetime.timedelta(days=1)
+      print("Start date changed")  
+      self.update_price()
+    
+      self.date_picker_enddate.min_date = self.date_picker_startdate.date + datetime.timedelta(days=1)
 
     def date_picker_enddate_change(self, **event_args):
-        print("End date changed") 
-        if self.date_picker_enddate.date <= self.date_picker_startdate.date:
-            self.date_picker_enddate.date = self.date_picker_startdate.date + datetime.timedelta(days=1)
-            print("End date adjusted to be one day after start date")  
-        self.update_price()
+      print("End date changed") 
+      if self.date_picker_enddate.date <= self.date_picker_startdate.date:
+        self.date_picker_enddate.date = self.date_picker_startdate.date + datetime.timedelta(days=1)
+        print("End date adjusted to be one day after start date")  
+      self.update_price()
 
     def button_book_booking_click(self, **event_args):
       added_users = []
-
       for user in self.repeating_panel_added_users.items:
         added_users.append(user['addedUser'])
-      
-      if self.date_picker_startdate.date and self.date_picker_enddate.date and self.total_price > 0:
+  
+      start_date = self.date_picker_startdate.date
+      end_date = self.date_picker_enddate.date
+  
+      if start_date and end_date and self.total_price > 0:
+        room_available = anvil.server.call('is_room_available', self.RID, start_date, end_date)
+
+        if room_available:
           try:
-              anvil.server.call(
-                'save_booking',
-                RID=self.properties["RID"],
-                room_nr=self.roomNr,
-                start_date=self.date_picker_startdate.date,
-                end_date=self.date_picker_enddate.date,
-                price=self.total_price,
-                addedUsers = added_users
-              )
-            
-              open_form('Statistics')
+            anvil.server.call(
+              'save_booking',
+              RID=self.RID,
+              room_nr=self.roomNr,
+              start_date=start_date,
+              end_date=end_date,
+              price=self.total_price,
+              addedUsers=added_users
+          )
+            open_form('Statistics')
           except Exception as e:
-              alert(f"Fehler beim Speichern der Buchung: {e}")
+            alert(f"Fehler beim Speichern der Buchung: {e}")
+        else:
+          unavailable_dates = anvil.server.call('get_unavailable_dates', self.RID, start_date, end_date)
+          if unavailable_dates:
+            unavailable_dates_str = "\n".join([f"{date[0]} bis {date[1]}" for date in unavailable_dates])
+            alert(f"""Das Zimmer ist für die folgenden Daten bereits gebucht:
+
+{unavailable_dates_str}
+
+Bitte wählen Sie andere Daten.""")
+          else:
+            alert("Das Zimmer ist für die ausgewählten Daten nicht verfügbar. Bitte wählen Sie andere Daten.")
       else:
-          alert("Bitte wählen Sie gültige Daten und versuchen Sie es erneut.")
+        alert("Bitte wählen Sie gültige Daten und versuchen Sie es erneut.")
+
 
     def link_home_click(self, **event_args):
-        open_form('Home')
+      open_form('Home')
 
     def link_book_click(self, **event_args):
-        open_form('Book')
+      open_form('Book')
 
     def link_statistics_click(self, **event_args):
-        open_form('Statistics')
+      open_form('Statistics')
 
     def button_login_logout_click(self, **event_args):
       userId = anvil.server.call('get_user_id')
@@ -128,17 +131,16 @@ class Booking(BookingTemplate):
                           
     def update_user_dropdown(self):
       try:
-          usernames = anvil.server.call('get_all_users', withoutSelf = True)
-          print(f"Users retrieved: {usernames}")
-          print(self.drop_down_addUser.items)
-          self.drop_down_addUser.items = [("", "")] + [(username, username) for username in usernames]
-          self.drop_down_addUser.selected_value = ""
+        usernames = anvil.server.call('get_all_users', withoutSelf = True)
+        print(f"Users retrieved: {usernames}")
+        print(self.drop_down_addUser.items)
+        self.drop_down_addUser.items = [("", "")] + [(username, username) for username in usernames]
+        self.drop_down_addUser.selected_value = ""
       except Exception as e:
-          alert(f"Fehler beim Abrufen der Benutzerdaten: {e}")
+        alert(f"Fehler beim Abrufen der Benutzerdaten: {e}")
 
         
     def drop_down_addUser_change(self, **event_args):
-      """This method is called when an item is selected"""
       selected_user = self.drop_down_addUser.selected_value
       added_users = []
       dropdown_users = []
@@ -150,18 +152,18 @@ class Booking(BookingTemplate):
         dropdown_users.append(user)
       
       if selected_user and selected_user != "":
-          toAdd = {
-              'addedUser': selected_user,        
-          }
-          
-          added_users.append(toAdd)
-          print(self.drop_down_addUser.items)
+        toAdd = {
+            'addedUser': selected_user,        
+        }
+        
+        added_users.append(toAdd)
+        print(self.drop_down_addUser.items)
 
-          for index, item in enumerate(dropdown_users):
-            if item[0] == selected_user:
-              dropdown_users.pop(index)
-              self.drop_down_addUser.selected_value = ""
-              break
+        for index, item in enumerate(dropdown_users):
+          if item[0] == selected_user:
+            dropdown_users.pop(index)
+            self.drop_down_addUser.selected_value = ""
+            break
 
       self.repeating_panel_added_users.items = added_users
       self.drop_down_addUser.items = dropdown_users
@@ -178,14 +180,3 @@ class Booking(BookingTemplate):
         anvil.server.call('logout')
       open_form('Home')
 
-"""    def disable_booked_dates(self):
-      booked_dates = anvil.server.call('get_booked_dates', self.RID)
-  
-      disabled_dates = []
-  
-      for booked_date in booked_dates:
-          disabled_dates.append(booked_date)
-  
-      self.date_picker_startdate.disabled_dates = disabled_dates
-      self.date_picker_enddate.disabled_dates = disabled_dates
-        """
