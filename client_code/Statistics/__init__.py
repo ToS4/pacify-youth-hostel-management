@@ -8,9 +8,8 @@ class Statistics(StatisticsTemplate):
 
         self.check_login()
       
-        userId = anvil.server.call('get_user_id')
-        bookings = anvil.server.call('get_bookings_by_user', userId)
-        print(bookings)
+        bookings = anvil.server.call('get_bookings_by_user')
+        print("statistics", bookings)
 
         self.data_grid_bookings.items = self.prepare_data_for_grid(bookings)    
 

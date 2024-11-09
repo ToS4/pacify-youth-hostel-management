@@ -87,7 +87,7 @@ class Booking(BookingTemplate):
                     room_nr=self.roomNr,
                     start_date=self.date_picker_startdate.date,
                     end_date=self.date_picker_enddate.date,
-                    price=self.total_price
+                    price=self.total_price,
                 )
                 open_form('Statistics')
             except Exception as e:

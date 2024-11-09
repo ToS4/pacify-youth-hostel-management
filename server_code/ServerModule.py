@@ -112,11 +112,11 @@ def get_rooms_by_jugendherberge(jugendherberge_id):
     
 
 @anvil.server.callable
-def get_bookings_by_user(user_id):
+def get_bookings_by_user():
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
 
-    print(user_id)
+    userId = get_user_id()
   
     cursor.execute("""
     SELECT 
@@ -137,7 +137,7 @@ def get_bookings_by_user(user_id):
         Jugendherberge ON Room.JID = Jugendherberge.JID
     WHERE
         book.UID = ?;  
-    """, (user_id,))
+    """, (userId,))
   
     bookings = cursor.fetchall()
     connection.close()
