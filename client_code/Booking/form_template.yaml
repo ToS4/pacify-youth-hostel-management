@@ -60,8 +60,8 @@ components:
     name: data_grid_Added_Users
     properties:
       columns:
-      - {data_key: addedUser, expand: false, id: JKSDUP, title: Added Users, width: 776.111083984375}
-      - {data_key: remove_users, id: OJLQEN, title: Remove}
+      - {data_key: addedUser, expand: false, id: JKSDUP, title: Added Users, width: 715}
+      - {data_key: column_1, id: OJLQEN, title: ''}
     type: DataGrid
   - layout_properties: {grid_position: 'DBYJZM,RLGRIM'}
     name: spacer_1
