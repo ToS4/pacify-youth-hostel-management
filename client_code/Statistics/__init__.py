@@ -26,13 +26,13 @@ class Statistics(StatisticsTemplate):
         prepared_data = []
         for booking in bookings:
             prepared_data.append({
-                'roomNr': booking[1],               
-                'countBeds': booking[2],          
-                'priceCategory': booking[3],          
-                'location': booking[4],                
-                'startdate': booking[5],             
-                'enddate': booking[6],                
-                'price': booking[7]                   
+                'roomNr': booking[0],               
+                'countBeds': booking[1],          
+                'priceCategory': booking[2],          
+                'location': booking[3],                
+                'startdate': booking[4],             
+                'enddate': booking[5],                
+                'price': booking[6]                   
             })
         print(f"Prepared data for grid: {prepared_data}") # für debug
         return prepared_data
