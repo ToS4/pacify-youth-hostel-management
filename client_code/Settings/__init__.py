@@ -10,6 +10,7 @@ class Settings(SettingsTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     self.check_login()
+    self.label
 
   def check_login(self):
     userId = anvil.server.call('get_user_id')
@@ -44,4 +45,8 @@ class Settings(SettingsTemplate):
   def file_loader_profile_picture_change(self, file, **event_args):
     """This method is called when a new file is loaded into this FileLoader"""
     print("file_loader_profile_picture_change", file)
-    self.image_profilepicture = file
+    self.image_preview_profile_picture.source = file
+
+  def button_save_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    pass

@@ -89,6 +89,9 @@ components:
     name: button_login_logout
     properties: {text: Logout}
     type: Button
+  - name: image_profilepicture
+    properties: {display_mode: shrink_to_fit, height: 40.444427490234375, source: _/theme/user.png}
+    type: Image
   layout_properties: {slot: nav-right}
   name: navbar_links
   properties: {}
