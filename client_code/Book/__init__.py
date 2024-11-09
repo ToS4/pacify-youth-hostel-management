@@ -73,9 +73,6 @@ class Book(BookTemplate):
     except Exception as e:
         print(f"Fehler beim Abrufen der Räume: {e}")
 
-
-
-
   def link_home_click(self, **event_args):
     open_form('Home')
 

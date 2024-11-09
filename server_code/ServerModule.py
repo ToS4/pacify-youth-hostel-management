@@ -164,7 +164,7 @@ def add_username_to_booking(cursor, username, BID):
     print(f"Username '{username}' does not exist.")
 
 @anvil.server.callable
-def save_booking(room_nr, start_date, end_date, price, addedUsers):
+def save_booking(RID, room_nr, start_date, end_date, price, addedUsers):
   connection = None
 
   print(addedUsers)
@@ -173,12 +173,9 @@ def save_booking(room_nr, start_date, end_date, price, addedUsers):
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
     
-    cursor.execute("SELECT RID FROM Room WHERE RoomNr = ?", (room_nr,))
-    room_id = cursor.fetchone()
-    
     userId = get_user_id()
     
-    parameters = (start_date, end_date, price, userId, room_id[0])
+    parameters = (start_date, end_date, price, userId, RID)
     insert_query = """
     INSERT INTO book (Startdate, Enddate, price, UID, RID)
     VALUES (?, ?, ?, ?, ?)

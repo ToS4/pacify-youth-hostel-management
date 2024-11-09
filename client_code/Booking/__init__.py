@@ -96,6 +96,7 @@ class Booking(BookingTemplate):
           try:
               anvil.server.call(
                 'save_booking',
+                RID=self.properties["RID"],
                 room_nr=self.roomNr,
                 start_date=self.date_picker_startdate.date,
                 end_date=self.date_picker_enddate.date,
