@@ -47,10 +47,11 @@ class Statistics(StatisticsTemplate):
 
     def link_statistics_click(self, **event_args):
         open_form('Statistics')
-
-    def button_login_logout_click(self, **event_args):
+  
+    def button_login_register_click(self, **event_args):
       userId = anvil.server.call('get_user_id')
       if userId is None:
-        open_form('LoginRegister')
+        open_form('Home')
       else:
         anvil.server.call('logout')
+        

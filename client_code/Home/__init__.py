@@ -34,4 +34,5 @@ class Home(HomeTemplate):
       open_form('LoginRegister')
     else:
       anvil.server.call('logout')
+      self.button_login_logout.text = "Login / Register"
 

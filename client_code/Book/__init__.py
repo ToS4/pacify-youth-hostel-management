@@ -59,6 +59,11 @@ class Book(BookTemplate):
   def link_statistics_click(self, **event_args):
     open_form('Statistics')
 
-  def drop_down_location_change(self, **event_args):
-    """This method is called when an item is selected"""
-    self.update_rooms()
+  def button_login_register_click(self, **event_args):
+    userId = anvil.server.call('get_user_id')
+    if userId is None:
+      open_form('Home')
+    else:
+      anvil.server.call('logout')
+      
+

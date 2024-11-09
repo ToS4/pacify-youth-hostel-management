@@ -147,3 +147,10 @@ class Booking(BookingTemplate):
         current_items = self.data_grid_Added_Users.items
         current_items.remove(row)
         self.data_grid_Added_Users.items = current_items
+
+    def button_login_register_click(self, **event_args):
+      userId = anvil.server.call('get_user_id')
+      if userId is None:
+        open_form('Home')
+      else:
+        anvil.server.call('logout')

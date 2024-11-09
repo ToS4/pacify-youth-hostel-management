@@ -26,8 +26,9 @@ components:
   type: ColumnPanel
 - components:
   - event_bindings: {click: button_login_register_click}
+    layout_properties: {}
     name: button_login_logout
-    properties: {text: Login / Register}
+    properties: {text: Logout}
     type: Button
   layout_properties: {slot: nav-right}
   name: navbar_links

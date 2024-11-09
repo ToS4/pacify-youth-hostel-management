@@ -55,4 +55,8 @@ class LoginRegister(LoginRegisterTemplate):
     else:
       anvil.server.call('logout')
 
+  def button_GoBack_click(self, **event_args):
+    open_form('Home')
+    pass
+
     
