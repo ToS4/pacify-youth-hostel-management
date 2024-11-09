@@ -150,7 +150,6 @@ class Booking(BookingTemplate):
 
     def button_login_register_click(self, **event_args):
       userId = anvil.server.call('get_user_id')
-      if userId is None:
-        open_form('Home')
-      else:
+      if userId:
         anvil.server.call('logout')
+      open_form('Home')
