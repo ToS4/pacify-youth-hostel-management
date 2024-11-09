@@ -12,10 +12,11 @@ class Settings(SettingsTemplate):
     self.check_login()
 
   def check_login(self):
-    userId = anvil.server.call("get_user_id")
-    # print(userId)
+    userId = anvil.server.call('get_user_id')
+    #print(userId)
     if userId is None:
       self.button_login_logout.text = "Login / Register"
+      open_form('LoginRegister')
     else:
       self.button_login_logout.text = "Logout"
 
@@ -39,3 +40,8 @@ class Settings(SettingsTemplate):
   def link_settings_click(self, **event_args):
     open_form('Settings')
     pass
+
+  def file_loader_profile_picture_change(self, file, **event_args):
+    """This method is called when a new file is loaded into this FileLoader"""
+    print("file_loader_profile_picture_change", file)
+    image_profilepicture

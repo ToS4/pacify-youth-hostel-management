@@ -1,49 +1,82 @@
 components:
 - components:
+  - layout_properties: {grid_position: 'SVKGVY,MUHXOY'}
+    name: label_welcomer
+    properties: {bold: true, text: 'Welcome, {username}'}
+    type: Label
   - layout_properties: {grid_position: 'TIFTMA,ZVPVHC'}
     name: spacer_2
     properties: {height: 32}
     type: Spacer
   - layout_properties: {grid_position: 'TIFTMA,RVZUMA SGJFEQ,WNVXVF'}
     name: image_profilepicture
-    properties: {}
+    properties: {source: _/theme/user.png}
     type: Image
-  - layout_properties: {grid_position: 'TIFTMA,RVZUMA LJVQFO,PNMKIS'}
-    name: file_loader_1
+  - event_bindings: {change: file_loader_profile_picture_change}
+    layout_properties: {grid_position: 'TIFTMA,RVZUMA LJVQFO,PNMKIS'}
+    name: file_loader_profile_picture
     properties: {align: center}
     type: FileLoader
   - layout_properties: {grid_position: 'TIFTMA,DBTPKY'}
     name: spacer_1
     properties: {height: 32}
     type: Spacer
-  - layout_properties: {grid_position: 'SGVNEB,LXSZDH'}
-    name: label_username
-    properties: {}
-    type: Label
-  - layout_properties: {grid_position: 'MVAPON,TDMAKG'}
-    name: text_box_username
-    properties: {}
-    type: TextBox
-  - layout_properties: {grid_position: 'SLYJWI,NMNGHQ'}
+  - layout_properties: {grid_position: 'TQUTRH,IWCPNU'}
+    name: spacer_3
+    properties: {height: 32}
+    type: Spacer
+  - layout_properties: {grid_position: 'OIAHSP,NZQADO'}
     name: label_password
-    properties: {text: ''}
+    properties: {text: 'Current Password:'}
     type: Label
   - layout_properties: {grid_position: 'NYTTUQ,NHMZEJ'}
     name: text_box_CurrentPassword
     properties: {}
     type: TextBox
+  - layout_properties: {grid_position: 'NYTTUQ,RFLLGI'}
+    name: spacer_5
+    properties: {height: 32}
+    type: Spacer
+  - layout_properties: {grid_position: 'NYTTUQ,VFXJPM'}
+    name: spacer_4
+    properties: {height: 32}
+    type: Spacer
   - layout_properties: {grid_position: 'SGJAPU,OIZPFB'}
-    name: label_3
-    properties: {}
+    name: label_newpassword1
+    properties: {text: 'New Password:'}
     type: Label
   - layout_properties: {grid_position: 'AVBQSZ,KRYELV'}
     name: text_box_NewPassword1
     properties: {}
     type: TextBox
+  - layout_properties: {grid_position: 'AVBQSZ,UIYYPY'}
+    name: spacer_7
+    properties: {height: 32}
+    type: Spacer
+  - layout_properties: {grid_position: 'AVBQSZ,FUDQSB'}
+    name: spacer_6
+    properties: {height: 32}
+    type: Spacer
+  - layout_properties: {grid_position: 'CNTMDK,UVGOZT'}
+    name: label_newpassword2
+    properties: {text: 'Confirm Password:'}
+    type: Label
   - layout_properties: {grid_position: 'DERUBM,UEVTCL'}
-    name: text_box_NewPassword2
+    name: text_box_ConfirmPassword
     properties: {}
     type: TextBox
+  - layout_properties: {grid_position: 'DERUBM,AORMTP'}
+    name: spacer_8
+    properties: {height: 32}
+    type: Spacer
+  - layout_properties: {grid_position: 'DERUBM,EAJHBS'}
+    name: spacer_9
+    properties: {height: 32}
+    type: Spacer
+  - layout_properties: {grid_position: 'HBHTTN,BKWEDZ'}
+    name: button_1
+    properties: {background: 'theme:Primary', font_size: 14, foreground: 'theme:On Secondary', text: Save}
+    type: Button
   layout_properties: {slot: default}
   name: content_panel
   properties: {col_widths: '{}'}
