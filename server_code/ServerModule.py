@@ -153,35 +153,54 @@ def get_bookings_by_user():
     connection.close()
     return bookings
 
+def add_username_to_booking(cursor, username, BID):
+  cursor.execute("SELECT UID FROM User WHERE Username = ?", (username,))
+  userId = cursor.fetchone()
+    
+  if userId:
+    UID = userId[0]
+    cursor.execute("INSERT INTO bookWith (BID, UID) VALUES (?, ?)", (BID, UID))
+    print(f"User '{username}' linked to booking ID {BID}")
+  else:
+    print(f"Username '{username}' does not exist.")
+
 @anvil.server.callable
-def save_booking(room_nr, start_date, end_date, price):
+def save_booking(room_nr, start_date, end_date, price, addedUsers):
   connection = None
+
+  print(addedUsers)
+  
   try:
-      connection = sqlite3.connect(db_path)
-      cursor = connection.cursor()
-      
-      cursor.execute("SELECT RID FROM Room WHERE RoomNr = ?", (room_nr,))
-      room_id = cursor.fetchone()
-      
-      userId = get_user_id()
-      
-      parameters = (start_date, end_date, price, userId, room_id[0])
-      insert_query = """
-      INSERT INTO book (Startdate, Enddate, price, UID, RID)
-      VALUES (?, ?, ?, ?, ?)
-      """
-      
-      cursor.execute(insert_query, parameters)
-      connection.commit()
-      print("Buchung erfolgreich gespeichert.")
+    connection = sqlite3.connect(db_path)
+    cursor = connection.cursor()
+    
+    cursor.execute("SELECT RID FROM Room WHERE RoomNr = ?", (room_nr,))
+    room_id = cursor.fetchone()
+    
+    userId = get_user_id()
+    
+    parameters = (start_date, end_date, price, userId, room_id[0])
+    insert_query = """
+    INSERT INTO book (Startdate, Enddate, price, UID, RID)
+    VALUES (?, ?, ?, ?, ?)
+    """
+    
+    cursor.execute(insert_query, parameters)
+
+    BID = cursor.lastrowid
+    for username in addedUsers:
+      add_username_to_booking(cursor, username, BID)
   
+    connection.commit()
+    print("Buchung erfolgreich gespeichert.")
+    
   except sqlite3.Error as e:
-      print(f"Fehler beim Speichern der Buchung: {e}")
-      raise RuntimeError("Fehler beim Speichern der Buchung.")
-  
+    print(f"Fehler beim Speichern der Buchung: {e}")
+    raise RuntimeError("Fehler beim Speichern der Buchung.")
+    
   finally:
-      if connection:
-          connection.close()
+    if connection:
+      connection.close()
 
 @anvil.server.callable
 def get_all_users(withoutSelf = False):

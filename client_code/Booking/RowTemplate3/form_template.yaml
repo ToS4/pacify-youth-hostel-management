@@ -1,6 +1,7 @@
 components:
-- layout_properties: {column: OJLQEN}
-  name: remove_users
+- event_bindings: {click: button_remove_click}
+  layout_properties: {column: OJLQEN}
+  name: button_remove
   properties: {text: Remove}
   type: Button
 container: {type: DataRowPanel}

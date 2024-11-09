@@ -57,6 +57,5 @@ class LoginRegister(LoginRegisterTemplate):
 
   def button_GoBack_click(self, **event_args):
     open_form('Home')
-    pass
 
     

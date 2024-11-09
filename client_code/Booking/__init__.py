@@ -32,6 +32,8 @@ class Booking(BookingTemplate):
         self.total_price = self.price_per_night
         self.label_price.text = f"Total Price: ${self.total_price}"
 
+        self.repeating_panel_added_users.items = []
+      
         self.disable_booked_dates() 
         self.update_user_dropdown() 
         self.check_login()
@@ -50,7 +52,7 @@ class Booking(BookingTemplate):
             base_price = 80
         elif self.priceCategory == "Premium":
             base_price = 150
-        elif self.priceCategory == "Luxus":
+        elif self.priceCategory == "Deluxe":
             base_price = 300
         else:
             raise ValueError("Unbekannte Preiskategorie")
@@ -86,15 +88,22 @@ class Booking(BookingTemplate):
         self.update_price()
 
     def button_book_booking_click(self, **event_args):
+      added_users = []
+
+      for user in self.repeating_panel_added_users.items:
+        added_users.append(user['addedUser'])
+      
       if self.date_picker_startdate.date and self.date_picker_enddate.date and self.total_price > 0:
           try:
               anvil.server.call(
-                  'save_booking',
-                  room_nr=self.roomNr,
-                  start_date=self.date_picker_startdate.date,
-                  end_date=self.date_picker_enddate.date,
-                  price=self.total_price,
+                'save_booking',
+                room_nr=self.roomNr,
+                start_date=self.date_picker_startdate.date,
+                end_date=self.date_picker_enddate.date,
+                price=self.total_price,
+                addedUsers = added_users
               )
+            
               open_form('Statistics')
           except Exception as e:
               alert(f"Fehler beim Speichern der Buchung: {e}")
@@ -131,20 +140,31 @@ class Booking(BookingTemplate):
     def drop_down_addUser_change(self, **event_args):
       """This method is called when an item is selected"""
       selected_user = self.drop_down_addUser.selected_value
-      print(self.repeating_panel_added_users.items)
-      current_items = []
-      print("selected_user", selected_user)
-      print("current_items", current_items)
+      added_users = []
+      dropdown_users = []
+
+      for user in self.repeating_panel_added_users.items:
+        added_users.append(user)
+
+      for user in self.drop_down_addUser.items:
+        dropdown_users.append(user)
       
       if selected_user and selected_user != "":
           toAdd = {
               'addedUser': selected_user,        
           }
           
-          current_items.append(toAdd)
-          self.data_grid_Added_Users.items = current_items
+          added_users.append(toAdd)
+          print(self.drop_down_addUser.items)
 
+          for index, item in enumerate(dropdown_users):
+            if item[0] == selected_user:
+              dropdown_users.pop(index)
+              self.drop_down_addUser.selected_value = ""
+              break
 
+      self.repeating_panel_added_users.items = added_users
+      self.drop_down_addUser.items = dropdown_users
     
     def data_grid_Added_Users_click(self, row, **event_args):
       if row.get('remove_users') == "Entfernen":
