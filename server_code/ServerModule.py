@@ -287,18 +287,19 @@ def get_username():
     return None
 
 
+"""@anvil.server.callable
+def save_profile_picture(profile_picture_file):
+    user_id = get_user_id()
+    if user_id:
+        user_row = app_tables.users.get(user_id=user_id)
+        if user_row:
+            user_row['profile_picture'] = profile_picture_file
+
 @anvil.server.callable
-def save_profile_pciture(profile_picture_file):
-  userID = get_user_id()
-  if userID is None:
-    raise RuntimeError("User not logged in")
-
-  connection = sqlite3.connect(db_path)
-  cursor = connection.cursor()
-
-  cursor.execute("UPDATE User SET ProfilePicture = ? WHERE UID = ?", (profile_picture_file, userID))
-
-  connection.commit()
-  connection.close()
-  
-  return True
+def get_profile_picture():
+    user_id = get_user_id()
+    if user_id:
+        user_row = app_tables.users.get(user_id=user_id)
+        return user_row['profile_picture'] if user_row else None
+    return None
+"""

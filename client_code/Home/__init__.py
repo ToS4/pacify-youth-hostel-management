@@ -9,6 +9,10 @@ class Home(HomeTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     self.check_login()
+    profile_picture = anvil.server.call('get_profile_picture')
+    if profile_picture:
+        self.image_profilepicture.source = profile_picture
+
 
   def check_login(self):
     userId = anvil.server.call('get_user_id')

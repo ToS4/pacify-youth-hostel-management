@@ -13,6 +13,9 @@ class Settings(SettingsTemplate):
     username = anvil.server.call('get_username')
     if username:
       self.label_welcomer.text = f"Welcome, {username}"
+    profile_picture = anvil.server.call('get_profile_picture')
+    if profile_picture:
+        self.image_profilepicture.source = profile_picture
 
     
 
@@ -49,6 +52,10 @@ class Settings(SettingsTemplate):
   def file_loader_profile_picture_change(self, file, **event_args):
     print("file_loader_profile_picture_change", file)
     self.image_preview_profile_picture.source = file
+    self.image_profilepicture.source = file
 
   def button_save_click(self, **event_args):
-    pass
+    if self.image_profilepicture.source:
+      anvil.server.call('save_profile_picture', self.image_profilepicture.source)
+      
+
