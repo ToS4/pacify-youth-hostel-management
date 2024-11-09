@@ -18,23 +18,24 @@ class Book(BookTemplate):
 
     self.drop_down_location.items = jugendherberge  
     #self.drop_down_location.selected_value = None  
-
-
     self.update_rooms()
 
     self.check_login()
 
+    """profile_picture = anvil.server.call('get_profile_picture')
+    if profile_picture:
+      self.image_profilepicture.source = profile_picture
+    else:
+      self.image_profilepicture.source = anvil.server.call('get_default_profile_picture')"""
 
-  
+    
   def check_login(self):
     userId = anvil.server.call('get_user_id')
-    #print(userId)
     if userId is None:
       self.button_login_logout.text = "Login / Register"
-      open_form('LoginRegister')
+      #self.image_profilepicture.source = anvil.server.call('get_default_profile_picture')
     else:
       self.button_login_logout.text = "Logout"
-  
 
   def update_rooms(self):
     selected_value = self.drop_down_location.selected_value

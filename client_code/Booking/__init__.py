@@ -7,45 +7,44 @@ import anvil.server
 
 class Booking(BookingTemplate):
     def __init__(self, **properties):
-        self.init_components(**properties)
+      self.init_components(**properties)
 
-        self.RID = properties["RID"]
-        #print(f"RID: {self.RID}") 
-        self.roomNr = properties["roomNr"]
-        self.beds = properties["beds"]
-        self.location = properties.get("location","Unkown") 
-        self.priceCategory = properties["priceCategory"]
+      self.RID = properties["RID"]
+      #print(f"RID: {self.RID}") 
+      self.roomNr = properties["roomNr"]
+      self.beds = properties["beds"]
+      self.location = properties.get("location","Unkown") 
+      self.priceCategory = properties["priceCategory"]
 
-        self.label_beds.text = f"{self.beds}" if self.beds else "N/A"
-        self.label_location.text = f"{self.location}" if self.location else "N/A"
-        self.label_priceCategory.text = self.priceCategory if self.priceCategory else "N/A"
+      self.label_beds.text = f"{self.beds}" if self.beds else "N/A"
+      self.label_location.text = f"{self.location}" if self.location else "N/A"
+      self.label_priceCategory.text = self.priceCategory if self.priceCategory else "N/A"
 
-        today = datetime.date.today()
-        self.date_picker_startdate.date = today
-        self.date_picker_startdate.min_date = today 
+      today = datetime.date.today()
+      self.date_picker_startdate.date = today
+      self.date_picker_startdate.min_date = today 
 
-        self.date_picker_enddate.date = None
-        self.date_picker_enddate.min_date = today + datetime.timedelta(days=1)
-        
-        self.price_per_night = anvil.server.call('get_price_per_night', self.priceCategory, self.beds)
-        self.total_price = self.price_per_night
-        self.label_price.text = f"Total Price: ${self.total_price}"
-
-        self.repeating_panel_added_users.items = []
+      self.date_picker_enddate.date = None
+      self.date_picker_enddate.min_date = today + datetime.timedelta(days=1)
       
-        #self.disable_booked_dates() 
-        self.update_user_dropdown() 
-        self.check_login()
+      self.price_per_night = anvil.server.call('get_price_per_night', self.priceCategory, self.beds)
+      self.total_price = self.price_per_night
+      self.label_price.text = f"Total Price: ${self.total_price}"
 
-    def check_login(self):
-      userId = anvil.server.call('get_user_id')
-      #print(userId)
-      if userId is None:
-        self.button_login_logout.text = "Login / Register"
-        open_form('LoginRegister')
+      self.repeating_panel_added_users.items = []
+
+      #self.disable_booked_dates() 
+      self.update_user_dropdown() 
+      self.check_login()
+
+      """profile_picture = anvil.server.call('get_profile_picture')
+      if profile_picture:
+        self.image_profilepicture.source = profile_picture
       else:
-        self.button_login_logout.text = "Logout"
+        self.image_profilepicture.source = anvil.server.call('get_default_profile_picture')"""
 
+
+        
     def update_price(self):
       #print(f"Start date: {self.date_picker_startdate.date}, End date: {self.date_picker_enddate.date}")
       if self.date_picker_startdate.date and self.date_picker_enddate.date:
@@ -182,3 +181,12 @@ Bitte wählen Sie andere Daten.""")
 
     def link_settings_click(self, **event_args):
       open_form('Settings')
+
+          
+    def check_login(self):
+      userId = anvil.server.call('get_user_id')
+      if userId is None:
+        self.button_login_logout.text = "Login / Register"
+        #self.image_profilepicture.source = anvil.server.call('get_default_profile_picture')
+      else:
+        self.button_login_logout.text = "Logout"

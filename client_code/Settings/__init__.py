@@ -8,6 +8,7 @@ import anvil.server
 
 class Settings(SettingsTemplate):
   def __init__(self, **properties):
+    print(self.image_preview_profile_picture.source)
     self.init_components(**properties)
     self.check_login()
     username = anvil.server.call('get_username')
@@ -15,8 +16,9 @@ class Settings(SettingsTemplate):
       self.label_welcomer.text = f"Welcome, {username}"
     profile_picture = anvil.server.call('get_profile_picture')
     if profile_picture:
-        self.image_profilepicture.source = profile_picture
-
+      self.image_profilepicture.source = profile_picture
+    else:
+      self.image_profilepicture.source = self.get_default_profile_picture()
     
 
   def check_login(self):
@@ -24,6 +26,7 @@ class Settings(SettingsTemplate):
     #print(userId)
     if userId is None:
       self.button_login_logout.text = "Login / Register"
+      self.image_profilepicture.source = self.get_default_profile_picture()
       open_form('LoginRegister')
     else:
       self.button_login_logout.text = "Logout"
@@ -38,12 +41,10 @@ class Settings(SettingsTemplate):
     open_form("Statistics")
 
   def button_login_logout_click(self, **event_args):
-    userId = anvil.server.call("get_user_id")
-    if userId is None:
-      open_form("LoginRegister")
-    else:
-      anvil.server.call("logout")
-      self.button_login_logout.text = "Login / Register"
+    userId = anvil.server.call('get_user_id')
+    if userId:
+      anvil.server.call('logout')
+    open_form('Home')
 
   def link_settings_click(self, **event_args):
     open_form('Settings')
@@ -51,10 +52,10 @@ class Settings(SettingsTemplate):
 
   def file_loader_profile_picture_change(self, file, **event_args):
     print("file_loader_profile_picture_change", file)
-    #self.image_profilepicture.source = file
     
     if file:
       self.image_preview_profile_picture.source = file
+      self.image_profilepicture.source = file
 
   def handle_response(self, success, msg):
     self.label_responseMsg.text = ""
@@ -67,6 +68,7 @@ class Settings(SettingsTemplate):
     if self.image_profilepicture.source:
       anvil.server.call('save_profile_picture', self.image_profilepicture.source)
 
-    if self.text_box_NewPassword.text != '' and self.text_box_CurrentPassword.text != '' and self.text_box_ConfirmPassword == self.text_box_NewPassword:
-      result, msg = anvil.server.call('change_password', current=self.text_box_CurrentPassword.text, new=self.text_box_NewPassword)
+    if self.text_box_NewPassword.text != '' and self.text_box_CurrentPassword.text != '' and self.text_box_ConfirmPassword.text == self.text_box_NewPassword.text:
+      result, msg = anvil.server.call('change_password', current=self.text_box_CurrentPassword.text, new=self.text_box_NewPassword.text)
       self.handle_response(result, msg)
+

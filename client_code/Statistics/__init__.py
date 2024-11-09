@@ -3,41 +3,48 @@ from anvil import *
 import anvil.server
 
 class Statistics(StatisticsTemplate):
-    def __init__(self, **properties):
-        self.init_components(**properties)
+  def __init__(self, **properties):
+    self.init_components(**properties)
 
-        self.check_login()
+    self.check_login()
+  
+    bookings = anvil.server.call('get_bookings_by_user')
+    #print("statistics", bookings)
+
+    self.update_bookings(bookings)
+
+    """profile_picture = anvil.server.call('get_profile_picture')
+    if profile_picture:
+      self.image_profilepicture.source = profile_picture
+    else:
+      self.image_profilepicture.source = anvil.server.call('get_default_profile_picture')"""
+
       
-        bookings = anvil.server.call('get_bookings_by_user')
-        #print("statistics", bookings)
+  def check_login(self):
+    userId = anvil.server.call('get_user_id')
+    if userId is None:
+      self.button_login_logout.text = "Login / Register"
+      #self.image_profilepicture.source = anvil.server.call('get_default_profile_picture')
+    else:
+      self.button_login_logout.text = "Logout"
+  
 
-        self.update_bookings(bookings)
-
-    def check_login(self):
-      userId = anvil.server.call('get_user_id')
-      #print(userId)
-      if userId is None:
-        self.button_login_logout.text = "Login / Register"
-        open_form('LoginRegister')
-      else:
-        self.button_login_logout.text = "Logout"
-
-    def update_bookings(self, bookings):
-      prepared_bookings = []
-      for booking in bookings:
-          toAdd = {
-              'roomNr': booking[0],
-              'startdate': booking[1],             
-              'enddate': booking[2],                
-              'countBeds': booking[3], 
-              'priceCategory': booking[4],
-              'location': booking[5],                
-              'price': booking[6]   
-          }
-          prepared_bookings.append(toAdd)
-      
-      self.repeating_panel_statistics.items = prepared_bookings
-      #print(prepared_bookings)
+  def update_bookings(self, bookings):
+    prepared_bookings = []
+    for booking in bookings:
+        toAdd = {
+            'roomNr': booking[0],
+            'startdate': booking[1],             
+            'enddate': booking[2],                
+            'countBeds': booking[3], 
+            'priceCategory': booking[4],
+            'location': booking[5],                
+            'price': booking[6]   
+        }
+        prepared_bookings.append(toAdd)
+    
+    self.repeating_panel_statistics.items = prepared_bookings
+    #print(prepared_bookings)
       
     def link_home_click(self, **event_args):
         open_form('Home')

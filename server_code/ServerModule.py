@@ -86,6 +86,7 @@ def logout():
 
 @anvil.server.callable
 def change_password(current, new):
+  print(current, new)
   # Ensure the user is logged in
   userId = get_user_id()
   if userId is None:
@@ -326,31 +327,42 @@ def change_password(current_password, new_password):
   print(current_password, new_password)
   pass
   
-
 @anvil.server.callable
 def save_profile_picture(profile_picture_file):
-  user_id = get_user_id()
-  if user_id:
-    connection = sqlite3.connect(db_path)
-    cursor = connection.cursor()
+    user_id = get_user_id()
+    if user_id:
+      connection = sqlite3.connect(db_path)
+      cursor = connection.cursor()
 
-    profile_picture_blob = profile_picture_file.get_bytes() if profile_picture_file else None
-    cursor.execute("UPDATE User SET ProfilePicture = ? WHERE UID = ?", (profile_picture_blob, user_id))
-    
-    connection.commit()
-    connection.close()
+      profile_picture_blob = profile_picture_file.get_bytes() if profile_picture_file else None
+      
+      if profile_picture_blob is None:
+        profile_picture_blob = get_default_profile_picture()
+
+      cursor.execute("UPDATE User SET ProfilePicture = ? WHERE UID = ?", (profile_picture_blob, user_id))
+      connection.commit()
+      connection.close()
+
 
 @anvil.server.callable
 def get_profile_picture():
-  user_id = get_user_id()
-  if user_id:
-    connection = sqlite3.connect(db_path)
-    cursor = connection.cursor()
-    
-    cursor.execute("SELECT ProfilePicture FROM User WHERE UID = ?", (user_id,))
-    result = cursor.fetchone()
-    
-    connection.close()
-    
-    return anvil.BlobMedia("image/png", result[0]) if result and result[0] else None
-  return None
+    user_id = get_user_id()
+    if user_id:
+      connection = sqlite3.connect(db_path)
+      cursor = connection.cursor()
+
+      cursor.execute("SELECT ProfilePicture FROM User WHERE UID = ?", (user_id,))
+      result = cursor.fetchone()
+      connection.close()
+
+      if result and result[0]:
+        return anvil.BlobMedia("image/png", result[0])
+      else:
+        return get_default_profile_picture()
+
+    return get_default_profile_picture()
+
+@anvil.server.callable
+def get_default_profile_picture():
+  user_image = data_files['user.png']
+  return anvil.BlobMedia("image/png", user_image)
