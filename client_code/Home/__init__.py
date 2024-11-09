@@ -12,7 +12,7 @@ class Home(HomeTemplate):
 
   def check_login(self):
     userId = anvil.server.call('get_user_id')
-    print(userId)
+    #print(userId)
     if userId is None:
       self.button_login_logout.text = "Login / Register"
     else:
