@@ -330,19 +330,23 @@ def get_username():
   
 @anvil.server.callable
 def save_profile_picture(profile_picture_file):
-    user_id = get_user_id()
-    if user_id:
-      connection = sqlite3.connect(db_path)
-      cursor = connection.cursor()
+  if not profile_picture_file.content_type.startswith("image/"):
+    return
+    
 
-      profile_picture_blob = profile_picture_file.get_bytes() if profile_picture_file else None
-      
-      if profile_picture_blob is None:
-        profile_picture_blob = get_default_profile_picture()
+  user_id = get_user_id()
+  if user_id:
+    connection = sqlite3.connect(db_path)
+    cursor = connection.cursor()
 
-      cursor.execute("UPDATE User SET ProfilePicture = ? WHERE UID = ?", (profile_picture_blob, user_id))
-      connection.commit()
-      connection.close()
+    profile_picture_blob = profile_picture_file.get_bytes() if profile_picture_file else None
+    
+    if profile_picture_blob is None:
+      profile_picture_blob = get_default_profile_picture()
+
+    cursor.execute("UPDATE User SET ProfilePicture = ? WHERE UID = ?", (profile_picture_blob, user_id))
+    connection.commit()
+    connection.close()
 
 
 @anvil.server.callable

@@ -19,7 +19,6 @@ class Settings(SettingsTemplate):
     username = anvil.server.call('get_username')
     if username:
       self.label_welcomer.text = f"Welcome, {username}"
-    print(self.file_loader_profile_picture.file_types)
 
   def check_login(self):
     userId = anvil.server.call('get_user_id')
@@ -53,7 +52,9 @@ class Settings(SettingsTemplate):
     #print("file_loader_profile_picture_change", file)
     
     if file:
-      self.image_preview_profile_picture.source = file
+      if file.content_type.startswith("image/"):
+        self.image_preview_profile_picture.source = file
+      
 
   def handle_response(self, success, msg):
     self.label_responseMsg.text = ""
