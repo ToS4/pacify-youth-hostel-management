@@ -68,7 +68,23 @@ class Settings(SettingsTemplate):
     if self.image_profilepicture.source:
       anvil.server.call('save_profile_picture', self.image_profilepicture.source)
 
-    if self.text_box_NewPassword.text != '' and self.text_box_CurrentPassword.text != '' and self.text_box_ConfirmPassword.text == self.text_box_NewPassword.text:
-      result, msg = anvil.server.call('change_password', current=self.text_box_CurrentPassword.text, new=self.text_box_NewPassword.text)
-      self.handle_response(result, msg)
+    if self.text_box_CurrentPassword.text != '':
+      if self.text_box_NewPassword.text == '':
+          self.handle_response(False, "Please enter a new password.")
+      elif len(self.text_box_NewPassword.text) < 8:
+          self.handle_response(False, "New password must be at least 8 characters long.")
+      elif self.text_box_ConfirmPassword.text == '':
+          self.handle_response(False, "Please confirm your new password.")
+      elif self.text_box_ConfirmPassword.text != self.text_box_NewPassword.text:
+          self.handle_response(False, "New password and confirm password do not match.")
+      else:
+          result, msg = anvil.server.call(
+              'change_password', 
+              current=self.text_box_CurrentPassword.text, 
+              new=self.text_box_NewPassword.text
+          )
+          self.handle_response(result, msg)
+
+        
+      
 

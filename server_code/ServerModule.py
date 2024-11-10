@@ -53,8 +53,11 @@ def login(username, password):
 @anvil.server.callable
 def register(username, password):
 
-  if len(username) > 50:
-    return False, "Username is too long"
+  if len(username) > 50 and len(username) < 3:
+    return False, "Username has to be between 3 and 50 characters"
+
+  if len(password) < 8:
+    return False, "Passowrd has to be at least 8 characters"
 
   if not re.match("^[A-Za-z0-9_]+$", username):
     return False, "Username can only contain letters, numbers, and underscores, with no spaces."
@@ -91,6 +94,9 @@ def change_password(current, new):
   userId = get_user_id()
   if userId is None:
     return False, "You must be logged in to change your password."
+
+  if len(new) < 8:
+    return False, "New passowrd has to be at least 8 characters"
   
   # Connect to the database
   connection = sqlite3.connect(db_path)
@@ -321,11 +327,6 @@ def get_username():
     return result[0]
   else:
     return None
-
-
-def change_password(current_password, new_password):
-  print(current_password, new_password)
-  pass
   
 @anvil.server.callable
 def save_profile_picture(profile_picture_file):
