@@ -9,6 +9,10 @@ class Booking(BookingTemplate):
     def __init__(self, **properties):
       self.init_components(**properties)
 
+      profile_picture = anvil.server.call('get_profile_picture')
+      if profile_picture:
+        self.image_profilepicture.source = profile_picture
+      
       self.RID = properties["RID"]
       #print(f"RID: {self.RID}") 
       self.roomNr = properties["roomNr"]

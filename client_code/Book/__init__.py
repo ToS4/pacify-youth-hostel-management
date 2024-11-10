@@ -9,6 +9,10 @@ class Book(BookTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
 
+    profile_picture = anvil.server.call('get_profile_picture')
+    if profile_picture:
+        self.image_profilepicture.source = profile_picture
+    
     data_all_jugendherberge = anvil.server.call('get_all_jugendherberge')
     #print(data_all_jugendherberge)
 
@@ -22,18 +26,15 @@ class Book(BookTemplate):
 
     self.check_login()
 
-    """profile_picture = anvil.server.call('get_profile_picture')
+    profile_picture = anvil.server.call('get_profile_picture')
     if profile_picture:
       self.image_profilepicture.source = profile_picture
-    else:
-      self.image_profilepicture.source = anvil.server.call('get_default_profile_picture')"""
 
     
   def check_login(self):
     userId = anvil.server.call('get_user_id')
     if userId is None:
       self.button_login_logout.text = "Login / Register"
-      #self.image_profilepicture.source = anvil.server.call('get_default_profile_picture')
     else:
       self.button_login_logout.text = "Logout"
 
@@ -89,6 +90,7 @@ class Book(BookTemplate):
       open_form('Home')
     else:
       anvil.server.call('logout')
+      self.image_profilepicture.source = anvil.server.call('get_default_profile_picture')
     open_form('Home')
 
   def drop_down_location_change(self, **event_args):

@@ -358,12 +358,9 @@ def get_profile_picture():
 
       if result and result[0]:
         return anvil.BlobMedia("image/png", result[0])
-      else:
-        return get_default_profile_picture()
 
     return get_default_profile_picture()
 
 @anvil.server.callable
 def get_default_profile_picture():
-  user_image = data_files['user.png']
-  return anvil.BlobMedia("image/png", user_image)
+ return anvil.server.get_app_origin() + "/_/theme/user.png"

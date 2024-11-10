@@ -8,17 +8,16 @@ import anvil.server
 
 class Settings(SettingsTemplate):
   def __init__(self, **properties):
-    print(self.image_preview_profile_picture.source)
     self.init_components(**properties)
     self.check_login()
+
+    profile_picture = anvil.server.call('get_profile_picture')
+    if profile_picture:
+      self.image_preview_profile_picture.source = profile_picture
+    
     username = anvil.server.call('get_username')
     if username:
       self.label_welcomer.text = f"Welcome, {username}"
-    """profile_picture = anvil.server.call('get_profile_picture')
-    if profile_picture:
-      self.image_profilepicture.source = profile_picture
-    else:
-      self.image_profilepicture.source = self.get_default_profile_picture()"""
     
 
   def check_login(self):
@@ -55,7 +54,6 @@ class Settings(SettingsTemplate):
     
     if file:
       self.image_preview_profile_picture.source = file
-      self.image_profilepicture.source = file
 
   def handle_response(self, success, msg):
     self.label_responseMsg.text = ""
@@ -85,6 +83,5 @@ class Settings(SettingsTemplate):
           )
           self.handle_response(result, msg)
 
-        
       
 

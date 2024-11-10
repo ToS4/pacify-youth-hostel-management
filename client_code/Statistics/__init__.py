@@ -6,25 +6,24 @@ class Statistics(StatisticsTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
 
+
+    
     self.check_login()
-  
+
+    profile_picture = anvil.server.call('get_profile_picture')
+    if profile_picture:
+      self.image_profilepicture.source = profile_picture
+    
     bookings = anvil.server.call('get_bookings_by_user')
     #print("statistics", bookings)
 
     self.update_bookings(bookings)
-
-    """profile_picture = anvil.server.call('get_profile_picture')
-    if profile_picture:
-      self.image_profilepicture.source = profile_picture
-    else:
-      self.image_profilepicture.source = anvil.server.call('get_default_profile_picture')"""
 
       
   def check_login(self):
     userId = anvil.server.call('get_user_id')
     if userId is None:
       self.button_login_logout.text = "Login / Register"
-      #self.image_profilepicture.source = anvil.server.call('get_default_profile_picture')
     else:
       self.button_login_logout.text = "Logout"
   
@@ -46,21 +45,21 @@ class Statistics(StatisticsTemplate):
     self.repeating_panel_statistics.items = prepared_bookings
     #print(prepared_bookings)
       
-    def link_home_click(self, **event_args):
-        open_form('Home')
-
-    def link_book_click(self, **event_args):
-        open_form('Book')
-
-    def link_statistics_click(self, **event_args):
-        open_form('Statistics')
-  
-    def button_login_register_click(self, **event_args):
-      userId = anvil.server.call('get_user_id')
-      if userId:
-        anvil.server.call('logout')
+  def link_home_click(self, **event_args):
       open_form('Home')
 
-    def link_settings_click(self, **event_args):
-      open_form('Settings')
-        
+  def link_book_click(self, **event_args):
+      open_form('Book')
+
+  def link_statistics_click(self, **event_args):
+      open_form('Statistics')
+
+  def button_login_register_click(self, **event_args):
+    userId = anvil.server.call('get_user_id')
+    if userId:
+      anvil.server.call('logout')
+      self.image_profilepicture.source = anvil.server.call('get_default_profile_picture')
+    open_form('Home')
+
+  def link_settings_click(self, **event_args):
+    open_form('Settings')

@@ -11,18 +11,15 @@ class Home(HomeTemplate):
     self.check_login()
 
   
-  """    profile_picture = anvil.server.call('get_profile_picture')
+    profile_picture = anvil.server.call('get_profile_picture')
     if profile_picture:
         self.image_profilepicture.source = profile_picture
-    else:
-        self.image_profilepicture.source = anvil.server.call('get_default_profile_picture')"""
 
     
   def check_login(self):
     userId = anvil.server.call('get_user_id')
     if userId is None:
       self.button_login_logout.text = "Login / Register"
-      #self.image_profilepicture.source = anvil.server.call('get_default_profile_picture')
     else:
       self.button_login_logout.text = "Logout"
   
@@ -43,6 +40,7 @@ class Home(HomeTemplate):
       open_form('LoginRegister')
     else:
       anvil.server.call('logout')
+      self.image_profilepicture.source = anvil.server.call('get_default_profile_picture')
       self.button_login_logout.text = "Login / Register"
 
   def link_settings_click(self, **event_args):

@@ -30,7 +30,7 @@ components:
     name: label_password
     properties: {text: 'Current Password:'}
     type: Label
-  - event_bindings: {pressed_enter: text_box_CurrentPassword_pressed_enter}
+  - event_bindings: {}
     layout_properties: {grid_position: 'NYTTUQ,NHMZEJ'}
     name: text_box_CurrentPassword
     properties: {hide_text: true}
