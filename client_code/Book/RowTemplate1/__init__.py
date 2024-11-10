@@ -17,13 +17,13 @@ class RowTemplate1(RowTemplate1Template):
   
   def button_book_home_click(self, **event_args):
     selected_location = get_open_form().drop_down_location.selected_value
-    print(f"Selected Location: {selected_location}") 
+    #print(f"Selected Location: {selected_location}") 
     if isinstance(selected_location, list) and len(selected_location) > 2:
         city_name = selected_location[2]
     else:
         city_name = "Unbekannt"
 
-    print(f"City Name: {city_name}")
+    #print(f"City Name: {city_name}")
 
     open_form(
         'Booking',

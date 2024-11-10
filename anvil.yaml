@@ -15,8 +15,9 @@ db_schema:
     server: full
     title: Files
 dependencies: []
-name: Jugendherberge Verwaltung
-package_name: Jugendherberge_Verwaltung
+metadata: {title: Pacify Youth Hostel Management}
+name: Pacify Youth Hostel Management
+package_name: Pacify_Youth_Hostel_Management
 renamed: true
 runtime_options:
   client_version: '3'

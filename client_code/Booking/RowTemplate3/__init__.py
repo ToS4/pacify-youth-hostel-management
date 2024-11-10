@@ -24,11 +24,11 @@ class RowTemplate3(RowTemplate3Template):
     user_to_remove = self.item['addedUser']
     
     for item in drop_down_addUser_items:
-      print("drop_down_addUser_items", item)
+      #print("drop_down_addUser_items", item)
       new_drop_down_addUser_items.append(item)
 
     for item in repeating_panel_added_users_items:
-      print("repeating_panel_added_users_items", item)
+      #print("repeating_panel_added_users_items", item)
 
       if item["addedUser"] == user_to_remove:
         new_drop_down_addUser_items.append((user_to_remove, user_to_remove))

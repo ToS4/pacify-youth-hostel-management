@@ -13,6 +13,7 @@ class Settings(SettingsTemplate):
 
     profile_picture = anvil.server.call('get_profile_picture')
     if profile_picture:
+      self.image_profilepicture.source = profile_picture
       self.image_preview_profile_picture.source = profile_picture
     
     username = anvil.server.call('get_username')
@@ -47,10 +48,9 @@ class Settings(SettingsTemplate):
 
   def link_settings_click(self, **event_args):
     open_form('Settings')
-    pass
 
   def file_loader_profile_picture_change(self, file, **event_args):
-    print("file_loader_profile_picture_change", file)
+    #print("file_loader_profile_picture_change", file)
     
     if file:
       self.image_preview_profile_picture.source = file
@@ -63,8 +63,8 @@ class Settings(SettingsTemplate):
     self.label_responseMsg.text = msg
   
   def button_save_click(self, **event_args):
-    if self.image_profilepicture.source:
-      anvil.server.call('save_profile_picture', self.image_profilepicture.source)
+    if self.image_preview_profile_picture.source:
+      anvil.server.call('save_profile_picture', self.image_preview_profile_picture.source)
 
     if self.text_box_CurrentPassword.text != '':
       if self.text_box_NewPassword.text == '':
@@ -82,6 +82,10 @@ class Settings(SettingsTemplate):
               new=self.text_box_NewPassword.text
           )
           self.handle_response(result, msg)
+
+    profile_picture = anvil.server.call('get_profile_picture')
+    if profile_picture:
+      self.image_profilepicture.source = profile_picture
 
       
 

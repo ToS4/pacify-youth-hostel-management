@@ -89,7 +89,7 @@ def logout():
 
 @anvil.server.callable
 def change_password(current, new):
-  print(current, new)
+  #print(current, new)
   # Ensure the user is logged in
   userId = get_user_id()
   if userId is None:
