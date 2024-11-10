@@ -19,7 +19,7 @@ class Settings(SettingsTemplate):
     username = anvil.server.call('get_username')
     if username:
       self.label_welcomer.text = f"Welcome, {username}"
-    
+    print(self.file_loader_profile_picture.file_types)
 
   def check_login(self):
     userId = anvil.server.call('get_user_id')
