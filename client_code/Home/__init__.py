@@ -18,12 +18,12 @@ class Home(HomeTemplate):
     
   def check_login(self):
     userId = anvil.server.call('get_user_id')
+    #print(userId)
     if userId is None:
       self.button_login_logout.text = "Login / Register"
+      #self.image_profilepicture.source = self.get_default_profile_picture()
     else:
       self.button_login_logout.text = "Logout"
-  
-
 
   def link_home_click(self, **event_args):
     open_form('Home')

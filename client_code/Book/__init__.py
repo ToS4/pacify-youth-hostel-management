@@ -33,8 +33,11 @@ class Book(BookTemplate):
     
   def check_login(self):
     userId = anvil.server.call('get_user_id')
+    #print(userId)
     if userId is None:
       self.button_login_logout.text = "Login / Register"
+      #self.image_profilepicture.source = self.get_default_profile_picture()
+      open_form('LoginRegister')
     else:
       self.button_login_logout.text = "Logout"
 
