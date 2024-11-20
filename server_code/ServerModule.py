@@ -17,6 +17,7 @@ import datetime
 #
 db_path=data_files["database.db"]
 
+
 def hash_password(password: str) -> str:
   return sha256_crypt.hash(password)
 
@@ -145,7 +146,7 @@ def get_all_jugendherberge():
 def get_rooms_by_jugendherberge(jugendherberge_id):
   connection = sqlite3.connect(db_path)
   cursor = connection.cursor()
-
+v
   cursor.execute("""
       SELECT Room.RoomNr, Room.Beds, PriceCategory.Name AS PriceCategoryName, Room.RID
       FROM Room
@@ -221,7 +222,7 @@ def save_booking(RID, room_nr, start_date, end_date, price, addedUsers):
     insert_query = """
     INSERT INTO book (Startdate, Enddate, price, UID, RID)
     VALUES (?, ?, ?, ?, ?)
-    """
+    """v
     
     cursor.execute(insert_query, parameters)
 

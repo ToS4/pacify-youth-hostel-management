@@ -45,7 +45,7 @@ class Book(BookTemplate):
     selected_value = self.drop_down_location.selected_value
 
     if selected_value is None:
-        #print("Kein Wert im Dropdown ausgewählt.")
+        #print("Kein Wert im Dropdvown ausgewählt.")
         return
 
     jugendherberge_id = selected_value[0] 
